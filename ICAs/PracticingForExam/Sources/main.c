@@ -21,11 +21,12 @@
 /********************************************************************/
 // Defines
 /********************************************************************/
-
+#define ring
 /********************************************************************/
 // Local Prototypes
 /********************************************************************/
      int Helper(void);
+     void DelayFunction(void);
 /********************************************************************/
 // Global Variables
 /********************************************************************/
@@ -56,6 +57,7 @@ void main(void)
 
   for (;;)
   {
+    #ifdef ring
     if(SWL_Pushed(SWL_CTR))
     {
     for(j=0;j<40000;j++)
@@ -69,6 +71,7 @@ void main(void)
         
     }
     SWL_OFF(SWL_RED);
+
     SWL_ON(SWL_YELLOW);
     for(j=0;j<40000;j++)
     {
@@ -82,8 +85,47 @@ void main(void)
     }
     SWL_OFF(SWL_GREEN);
     }
+    #endif
+
+////////////////LEFTTTTT SWITCHHHH///////////////////////
+    if(SWL_Pushed(SWL_LEFT))
+    {
+    DelayFunction();
+    
+    SWL_ON(SWL_GREEN);
+
+      DelayFunction();
+
+    SWL_OFF(SWL_GREEN);
+    SWL_ON(SWL_YELLOW);
+    
+    DelayFunction();
+
+    SWL_OFF(SWL_YELLOW);
+    SWL_ON(SWL_RED);
+
+    DelayFunction();
+
+    SWL_OFF(SWL_RED);
+    }
+
+  if(SWL_Pushed(SWL_DOWN)>0)
+  {
+    // if(SWL_OFF(SWL_YELLOW))
+    // {
+      SWL_ON(SWL_YELLOW);
+    //}
+  
   }
+  else{
+      SWL_TOG(SWL_YELLOW);
+  }
+  DelayFunction();
+
+
 }
+}
+
 
 /********************************************************************/
 // Functions
@@ -107,6 +149,15 @@ int Helper(void)
   }
   
   return i;
+}
+
+void DelayFunction(void)
+{
+   for(j=0;j<40000;j++)
+  {
+        
+  }
+
 }
 /********************************************************************/
 // Interrupt Service Routines
