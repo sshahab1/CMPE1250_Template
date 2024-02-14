@@ -110,23 +110,24 @@ void main(void)
     // Tier 3
 
     int count = Helper();
-
-   if (SWL_Pushed(SWL_LEFT)&count<2)
+    if (SWL_Pushed(SWL_LEFT))
     {
-     
+      if(count<2){
         SWL_ON(SWL_RED);
+      }
     }
-    if (SWL_Pushed(SWL_CTR) &count<2)
+    if (SWL_Pushed(SWL_CTR) )
     {
-     
+      if(count<2){
         SWL_ON(SWL_YELLOW);
+      }
     }
-    if (SWL_Pushed(SWL_RIGHT)&count<2)
+    if (SWL_Pushed(SWL_RIGHT))
     {
-      
+      if(count<2){
         SWL_ON(SWL_GREEN);
+      }
     }
-
    
 
 
@@ -154,15 +155,15 @@ int Helper(void)
 
   int i = 0;
 
-  if (SWL_Pushed(SWL_RED))
+  if (SWL_Pushed(SWL_RED)>0)
   {
     i++;
   }
-  if (SWL_Pushed(SWL_YELLOW))
+  if (SWL_Pushed(SWL_YELLOW)>0)
   {
     i++;
   }
-  if (SWL_Pushed(SWL_GREEN))
+  if (SWL_Pushed(SWL_GREEN)>0)
   {
     i++;
   }
