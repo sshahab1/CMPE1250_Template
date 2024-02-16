@@ -1,12 +1,18 @@
 /********************************************************************/
-// HC12 Program:  YourProg - MiniExplanation
+// HC12 Program:  The exam part a is turning on all leds then 
+//toggling red using delay then turn on green 
+//if two switches pressed otherwise turn on yellow if green is off
 // Processor:     MC9S12XDP512
 // Bus Speed:     40 MHz
-// Author:        Saamia
-// Details:       A more detailed explanation of the program is entered here
-// Date:          Date Created
-// Revision History :
-//  each revision will have a date + desc. of changes
+// Author:        Saamia Shahab
+// Details:       Exam 1
+// Date:          Feb 16 2024
+// Revision History : 
+/*working on part a
+working on part b fixed part b
+working on part c 
+
+*/
 
 /********************************************************************/
 // Library includes
@@ -21,12 +27,13 @@
 /********************************************************************/
 // Defines
 /********************************************************************/
-#define ring
+//#define ring
 /********************************************************************/
 // Local Prototypes
 /********************************************************************/
-     int Helper(void);
-     void DelayFunction(void);
+void DelayFunctionRED_ON(void);
+void DelayFunctionRED_OFF(void);
+int Switches(void);
 /********************************************************************/
 // Global Variables
 /********************************************************************/
@@ -56,109 +63,87 @@ void main(void)
   /********************************************************************/
 
   for (;;)
-  {
+  { 
+
+
+     //PART A
     #ifdef ring
-    if(SWL_Pushed(SWL_CTR))
-    {
-    for(j=0;j<40000;j++)
-    {
-        
-    }
-
-      SWL_ON(SWL_RED);
-      for(j=0;j<40000;j++)
-    {
-        
-    }
-    SWL_OFF(SWL_RED);
-
-    SWL_ON(SWL_YELLOW);
-    for(j=0;j<40000;j++)
-    {
-        
-    }
-    SWL_OFF(SWL_YELLOW);
-    SWL_ON(SWL_GREEN);
-    for(j=0;j<40000;j++)
-    {
-        
-    }
-    SWL_OFF(SWL_GREEN);
-    }
+     SWL_ON(SWL_RED);
+     SWL_ON(SWL_GREEN);
+     SWL_ON(SWL_YELLOW);
     #endif
 
-////////////////LEFTTTTT SWITCHHHH///////////////////////
-    if(SWL_Pushed(SWL_LEFT))
-    {
-      DelayFunction();
-    
-      SWL_ON(SWL_GREEN);
-
-      DelayFunction();
-
-      SWL_OFF(SWL_GREEN);
-      SWL_ON(SWL_YELLOW);
-    
-      DelayFunction();
-
-      SWL_OFF(SWL_YELLOW);
-      SWL_ON(SWL_RED);
-
-      DelayFunction();
-
-      SWL_OFF(SWL_RED);
-    }
-
-  if(SWL_Pushed(SWL_DOWN)>0)
-  {
-    // if(SWL_OFF(SWL_YELLOW))
-    // {
-      SWL_ON(SWL_YELLOW);
-    //}
   
+      //PART B
+    
+      SWL_OFF(SWL_RED);
+      DelayFunctionRED_OFF();
+      SWL_ON(SWL_RED);
+      DelayFunctionRED_ON();
+
+
+      //PART C
+      int count = Switches();
+      
+      if(count == 2) //if any 2 switches are pressed
+      {
+        SWL_ON(SWL_GREEN); //turn on green led and off all other leds
+        SWL_OFF(SWL_YELLOW);
+      }
+      else{ //otherwise turn on yellow if green is  not on
+        SWL_ON(SWL_YELLOW);
+        SWL_OFF(SWL_GREEN);
+      }
   }
-  else{
-      SWL_TOG(SWL_YELLOW);
-  }
-  DelayFunction();
-
-
 }
-}
-
 
 /********************************************************************/
 // Functions
 /********************************************************************/
-int Helper(void)
+int Switches(void) //creating a funtion that counts up 
 {
-
   int i = 0;
+  if (SWL_Pushed(SWL_LEFT) > 0) //if left is pressed count ++ 
+  {
+    i++;
+  }
+  if (SWL_Pushed(SWL_RIGHT) > 0)  //if right is pressed count ++ 
+  {
+    i++;
+  }
+  if (SWL_Pushed(SWL_UP) > 0)  //if up is pressed count ++ 
+  {
+    i++;
+  }
+  if (SWL_Pushed(SWL_DOWN) > 0)  //if down is pressed count ++ 
+  {
+    i++;
+  }
+  if (SWL_Pushed(SWL_CTR) > 0)  //if center is pressed count ++ 
+  {
+    i++;
+  }
 
-  if (SWL_Pushed(SWL_RED)>0)
-  {
-    i++;
-  }
-  if (SWL_Pushed(SWL_YELLOW)>0)
-  {
-    i++;
-  }
-  if (SWL_Pushed(SWL_GREEN)>0)
-  {
-    i++;
-  }
-  
-  return i;
+  return i; //return the value of i 
 }
-
-void DelayFunction(void)
+//using a delay function for on led
+void DelayFunctionRED_ON(void)
 {
-   for(j=0;j<40000;j++)
-  {
-        
-  }
+  //calculated the numbers using ratio 
+  for(j=0;j<2556;j++) //delay of 15ms
+      {
 
+      }
 }
+//using a delay function for on led
+void DelayFunctionRED_OFF(void)
+{
+  for(j=0;j<852;j++) //delay of 5ms
+      {
+
+      }
+}
+
 /********************************************************************/
 // Interrupt Service Routines
 /********************************************************************/
