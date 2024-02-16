@@ -25,9 +25,10 @@
 /********************************************************************/
 // Local Prototypes
 /********************************************************************/
-     int Helper(void);
-     void DelayFunction(void);
-     int Switches(void);
+int Helper(void);
+void DelayFunction(void);
+int Switches(void);
+void REDLED(void);
 /********************************************************************/
 // Global Variables
 /********************************************************************/
@@ -58,22 +59,40 @@ void main(void)
 
   for (;;)
   {
-   int pressed = Switches();
 
-   if(pressed == 2)
-   {
-    SWL_ON(SWL_GREEN);
-    SWL_OFF(SWL_YELLOW);
-   }
-   else{
-    SWL_ON(SWL_YELLOW);
-    SWL_OFF(SWL_GREEN);
-   }
+    /// delay function red led functon nested
+    REDLED();
+    //  SWL_ON(SWL_RED);
+    //  DelayFunction();
+    //  SWL_OFF(SWL_RED);
+    //  DelayFunction();
 
+    //    int pressed = Switches();
 
+    // if(pressed == 3)
+    // {
+    //   SWL_ON(SWL_ALL);
+
+    // }
+    //    if(pressed == 2)
+    //    {
+    //     SWL_ON(SWL_GREEN);
+    //     SWL_OFF(SWL_YELLOW);
+    //     SWL_OFF(SWL_RED);
+    //    }
+    //    if(pressed == 1)
+    //    {
+    //     SWL_ON(SWL_RED);
+    //     SWL_OFF(SWL_GREEN);
+    //     SWL_OFF(SWL_YELLOW);
+    //    }
+    //    if(pressed == 0){
+    //     SWL_ON(SWL_YELLOW);
+    //     SWL_OFF(SWL_GREEN);
+    //     SWL_OFF(SWL_RED);
+    //    }
   }
 }
-
 
 /********************************************************************/
 // Functions
@@ -81,25 +100,27 @@ void main(void)
 int Switches(void)
 {
   int i = 0;
-  if(SWL_Pushed(SWL_LEFT)>0) 
+  if (SWL_Pushed(SWL_LEFT) > 0)
   {
     i++;
   }
-  if(SWL_Pushed(SWL_RIGHT)>0)
-  {
-    i++;
-  } 
-  if(SWL_Pushed(SWL_UP)>0) 
+  if (SWL_Pushed(SWL_RIGHT) > 0)
   {
     i++;
   }
-  if(SWL_Pushed(SWL_DOWN)>0) {
+  if (SWL_Pushed(SWL_UP) > 0)
+  {
     i++;
   }
-  if(SWL_Pushed(SWL_CTR)>0) {
+  if (SWL_Pushed(SWL_DOWN) > 0)
+  {
     i++;
   }
-  
+  if (SWL_Pushed(SWL_CTR) > 0)
+  {
+    i++;
+  }
+
   return i;
 }
 int Helper(void)
@@ -107,29 +128,35 @@ int Helper(void)
 
   int i = 0;
 
-  if (SWL_Pushed(SWL_RED)>0) //if any switches on 
+  if (SWL_Pushed(SWL_RED) > 0) // if any switches on
   {
     i++;
   }
-  if (SWL_Pushed(SWL_YELLOW)>0)
+  if (SWL_Pushed(SWL_YELLOW) > 0)
   {
     i++;
   }
-  if (SWL_Pushed(SWL_GREEN)>0)
+  if (SWL_Pushed(SWL_GREEN) > 0)
   {
     i++;
   }
-  
+
   return i;
 }
 
 void DelayFunction(void)
 {
-   for(j=0;j<40000;j++)
+  for (j = 0; j < ; j++)
   {
-        
   }
+}
 
+void REDLED(void)
+{
+  SWL_ON(SWL_RED);
+  DelayFunction();
+  SWL_OFF(SWL_RED);
+  DelayFunction();
 }
 /********************************************************************/
 // Interrupt Service Routines
