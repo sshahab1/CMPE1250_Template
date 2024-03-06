@@ -49,9 +49,9 @@ void main(void)
   /********************************************************************/
   // one-time initializations
   /********************************************************************/
-  
+   SWL_Init();
   Clock_Set20MHZ();
-  SWL_Init();
+ 
   //Clock_Set24MHZ();
   RTICTL = 0b10010111;
 
@@ -65,7 +65,7 @@ void main(void)
     if (CRGFLG_RTIF) //check if the RTI period over?
     {
         CRGFLG = CRGFLG_RTIF_MASK; //clears the flag 
-        SWL_TOG (SWL_RED); //toggles red led
+        SWL_TOG(SWL_RED); //toggles red led
     }
 
      
