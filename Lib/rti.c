@@ -19,7 +19,7 @@ void RTI_Delay_ms(unsigned int ms)
         CRGFLG ~= CRGFLG_RTIF_MASK; //Stop the RTI 
         
     }
-    
+    unsigned int i=0;
     while(i<ms)
     {
         if (CRGFLG_RTIF) // RTI period over?

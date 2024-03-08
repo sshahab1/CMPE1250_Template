@@ -14,6 +14,7 @@
 #include <hidef.h>      /* common defines and macros */
 #include "derivative.h" /* derivative-specific definitions */
 #include "sw_led.h"
+#include "rti.h"
 //#include "clock.h"
 // Other system includes or your includes go here
 // #include <stdlib.h>
@@ -62,13 +63,28 @@ void main(void)
 
   for (;;)
   {
-    if (CRGFLG_RTIF) //check if the RTI period over?
-    {
-        CRGFLG = CRGFLG_RTIF_MASK; //clears the flag 
-        SWL_TOG(SWL_RED); //toggles red led
-    }
+    // if (CRGFLG_RTIF) //check if the RTI period over?
+    // {
+    //     CRGFLG = CRGFLG_RTIF_MASK; //clears the flag 
+    //     SWL_TOG(SWL_RED); //toggles red led
+    // }
 
+
+    SWL_TOG(SWL_RED);
+    RTI_Delay_ms(10);
      
+     if(SWL_Pushed(SWL_LEFT))
+     {
+        SWL_TOG(SWL_RED);
+        RTI_Delay_ms(8);
+     }
+     if(SWL_Pushed(SWL_DOWN))
+     {
+      
+        SWL_TOG(SWL_RED);
+        RTI_Delay_ms(12);
+
+     }
 
   }
 }
