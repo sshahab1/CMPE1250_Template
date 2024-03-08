@@ -15,7 +15,7 @@
 #include "derivative.h" /* derivative-specific definitions */
 #include "sw_led.h"
 #include "rti.h"
-//#include "clock.h"
+#include "clock.h"
 // Other system includes or your includes go here
 // #include <stdlib.h>
 // #include <stdio.h>
@@ -69,11 +69,11 @@ void main(void)
     //     SWL_TOG(SWL_RED); //toggles red led
     // }
 
-
+///tier 1
     SWL_TOG(SWL_RED);
-    RTI_Delay_ms(10);
+    RTI_Delay_ms(8);
      
-     if(SWL_Pushed(SWL_LEFT))
+     if(SWL_Pushed(SWL_UP))
      {
         SWL_TOG(SWL_RED);
         RTI_Delay_ms(8);
@@ -85,6 +85,31 @@ void main(void)
         RTI_Delay_ms(12);
 
      }
+
+//tier 2
+
+if(SWL_Pushed(SWL_LEFT))
+{
+  
+    SWL_ON(SWL_RED);
+    RTI_Delay_ms(1);
+    SWL_OFF(SWL_RED);
+    RTI_Delay_ms(9);
+}
+
+//tier 3
+
+if(SWL_Pushed(SWL_RIGHT))
+{
+   SWL_OFF(SWL_RED);
+   SWL_ON(SWL_GREEN);
+}
+
+
+
+
+
+
 
   }
 }
