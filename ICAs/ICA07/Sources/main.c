@@ -72,7 +72,7 @@ void main(void)
 
 ///tier 1
     SWL_TOG(SWL_RED);
-    RTI_Delay_ms(10);
+    RTI_Delay_ms(10); 
      
      if(SWL_Pushed(SWL_UP)>0)
      {
