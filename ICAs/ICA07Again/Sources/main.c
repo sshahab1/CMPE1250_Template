@@ -76,14 +76,14 @@ void main(void)
      
      if(SWL_Pushed(SWL_UP)>0)
      {
-      Delay(8);
+        Delay(7);
         SWL_TOG(SWL_RED);
          
         
      }
      if(SWL_Pushed(SWL_DOWN)>0)
      { 
-        Delay(12);
+        Delay(11);
         SWL_TOG(SWL_RED);
       
           
@@ -92,22 +92,22 @@ void main(void)
 
 //tier 2
 
-if(SWL_Pushed(SWL_LEFT))
-{
+// if(SWL_Pushed(SWL_LEFT))
+// {
   
-    SWL_ON(SWL_RED);
-    RTI_Delay_ms(1);
-    SWL_OFF(SWL_RED);
-    RTI_Delay_ms(9);
-}
+//     SWL_ON(SWL_RED);
+//     RTI_Delay_ms(1);
+//     SWL_OFF(SWL_RED);
+//     RTI_Delay_ms(9);
+// }
 
-//tier 3
+// //tier 3
 
-if(SWL_Pushed(SWL_RIGHT))
-{
-   SWL_OFF(SWL_RED);
-   SWL_ON(SWL_GREEN);
-}
+// if(SWL_Pushed(SWL_RIGHT))
+// {
+//    SWL_OFF(SWL_RED);
+//    SWL_ON(SWL_GREEN);
+// }
 
 
 

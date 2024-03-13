@@ -20,8 +20,10 @@ void RTI_Init(void);
 We will implemente this function later once we cover 
 function pointers
 */
-void RTI_InitCallback(void(*function)(void));
+//void RTI_InitCallback(void(*function)(void));
 
 /// @brief Blocking delay to be used  once the RTI MOdule is enabled
 /// @param timeout 
 void RTI_Delay_ms(unsigned int ms);
+
+void Delay(unsigned long ms);
