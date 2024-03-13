@@ -52,7 +52,7 @@ void main(void)
   /********************************************************************/
    SWL_Init();
    RTI_Init();
-   Clock_Set20MHZ();
+  //  Clock_Set20MHZ();
  
   //Clock_Set24MHZ();
 //   RTICTL = 0b10010111;
@@ -72,18 +72,18 @@ void main(void)
 
 ///tier 1
     SWL_TOG(SWL_RED);
-    Delay(10); 
+    RTI_Delay_ms(10); 
      
-     if(SWL_Pushed(SWL_UP)>0)
+     if(SWL_Pushed(SWL_UP)>0) 
      {
-        Delay(7);
+        RTI_Delay_ms(8);
         SWL_TOG(SWL_RED);
          
         
      }
      if(SWL_Pushed(SWL_DOWN)>0)
      { 
-        Delay(11);
+        RTI_Delay_ms(12);
         SWL_TOG(SWL_RED);
       
           

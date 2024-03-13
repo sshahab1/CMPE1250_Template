@@ -24,6 +24,6 @@ function pointers
 
 /// @brief Blocking delay to be used  once the RTI MOdule is enabled
 /// @param timeout 
-void RTI_Delay_ms(unsigned int ms);
+void RTI_Delay_ms(unsigned long ms);
 
 void Delay(unsigned long ms);
