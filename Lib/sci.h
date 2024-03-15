@@ -78,7 +78,7 @@ int sci0_read (unsigned char * pData);
 void sci0_txByte (unsigned char data);
 ///////////////////////////////////////////////////////////////
 
-
+ 
 /* BASIC FUNCTIONS END*******************************************************/
 
 

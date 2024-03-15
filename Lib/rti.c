@@ -12,7 +12,7 @@ void RTI_Init(void)
 void RTI_Delay_ms(unsigned long ms)
 {
     unsigned int i =0; ///0
-   
+      RTICTL = 0;
 
    //CRGINT |= CRGINT_RTIE_MASK; //0b10000000, Enable RT
     if (CRGFLG_RTIF) // Stop the RTI 
