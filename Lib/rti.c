@@ -35,7 +35,7 @@ void RTI_Delay_ms(unsigned long ms)
 
 }
 
-void Delay(unsigned long ms)
+void Delay(unsigned int ms)
 {
     
     RTICTL = 0;

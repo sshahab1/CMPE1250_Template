@@ -11,7 +11,7 @@
 extern volatile unsigned long rtiMasterCount;
 
 /// @brief Enables RTI Moule
-/// @param  
+/// @param    
 void RTI_Init(void);
 
 /// @brief Enables RTI Module with callback to be used in main
@@ -26,4 +26,4 @@ function pointers
 /// @param timeout 
 void RTI_Delay_ms(unsigned long ms);
 
-void Delay(unsigned long ms);
+void Delay(unsigned int ms);
