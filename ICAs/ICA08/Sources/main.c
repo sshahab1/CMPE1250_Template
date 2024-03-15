@@ -24,13 +24,15 @@
 // Defines
 /********************************************************************/
 unsigned long i = 0;
+unsigned char ch;
+unsigned char character;
 /********************************************************************/
 // Local Prototypes
 /********************************************************************/
 int Switches(void);
 Vowels(unsigned char ch);
 /********************************************************************/
-// Global Variables
+// Global Variables 
 /********************************************************************/
 
 /********************************************************************/
@@ -53,10 +55,10 @@ void main(void)
   /********************************************************************/
   SWL_Init();
   RTI_Init();
+  sci0_Init();
   Clock_Set20MHZ();
-  SCI0BD=130;
-  SCI0R2_TE=1;
-  SCI0R2_RE=1;
+  //SCI0BD=130;
+  
 
   /********************************************************************/
   // main program loop
@@ -66,20 +68,47 @@ void main(void)
   {
     Delay(50);
     SWL_TOG(SWL_RED); //run here o see if its running at 10 Hz on red pin
-    unsigned char random = rand() % 26 + 'A';
-    printf("Random Char:", random);
-
+   
+    ch= rand() % 26 + 'A';
+   
+    if (SCI0SR1_TDRE)
+    {
+        SCI0DRL = ch;
+    }
 //sci0_read(unsigned char *pData) if charcter recieved
 
 
-    if(Vowels(random)){
-      SWL_ON(SWL_GREEN);
-      SWL_OFF(SWL_YELLOW);
+    // if(Vowels(ch)){
+    //   SWL_ON(SWL_GREEN);
+    //   SWL_OFF(SWL_YELLOW);
+    // }
+    // else{
+    //   SWL_ON(SWL_YELLOW);
+    //   SWL_OFF(SWL_GREEN);
+    // }
+
+    //character = SCI0DRL;
+    //char * keych = &character;
+
+    
+   
+   //SCI0DRL - READS FROM KEYBOEARD
+     if (SCI0SR1 & SCI0SR1_RDRF_MASK) // check if a character has been received
+      {
+        sci0_read(&character);
+       // &keych = SCI0DRL;
+        if(Vowels(character)){
+        SWL_ON(SWL_GREEN);
+        SWL_OFF(SWL_YELLOW);
+      }
+        else{
+        SWL_ON(SWL_YELLOW);
+        SWL_OFF(SWL_GREEN);
+      }
+        
     }
-    else{
-      SWL_ON(SWL_YELLOW);
-      SWL_OFF(SWL_GREEN);
-    }
+   
+
 
   }
 }
