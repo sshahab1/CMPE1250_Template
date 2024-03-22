@@ -25,7 +25,7 @@
 /********************************************************************/
 unsigned long i = 0;
 unsigned char ch;
-unsigned char *character;
+unsigned char character;
 /********************************************************************/
 // Local Prototypes
 /********************************************************************/
@@ -90,32 +90,32 @@ void main(void)
 
     // SCI0DRL - READS FROM KEYBOEARD
     
-    if(SCI0SR1_RDRF)
+  //  if(SCI0SR1_RDRF)
 //      {
 //         pData = SCI0DRL;
 //      
 //     }
 
     
-    if (SCI0SR1 & SCI0SR1_RDRF_MASK) // check if a character has been received
-    {
-      // sci0_read(&character);
-      // &keych = SCI0DRL;
+    // if (SCI0SR1 & SCI0SR1_RDRF_MASK) // check if a character has been received
+    // {
+    //   // sci0_read(&character);
+    //   // &keych = SCI0DRL;
      
-        ch==SCI0DRL;
+    //     character=SCI0DRL;
         
-        if (Vowels(ch))
-        {
-          SWL_ON(SWL_GREEN);
-          SWL_OFF(SWL_YELLOW);
-        }
-        else
-        {
-          SWL_ON(SWL_YELLOW);
-          SWL_OFF(SWL_GREEN);
-        }
+    //     if (Vowels(character))
+    //     {
+    //       SWL_ON(SWL_GREEN);
+    //       SWL_OFF(SWL_YELLOW);
+    //     }
+    //     else
+    //     {
+    //       SWL_ON(SWL_YELLOW);
+    //       SWL_OFF(SWL_GREEN);
+    //     }
       
-    }
+    // }
   }
 }
 

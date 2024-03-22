@@ -24,7 +24,7 @@
 // Defines
 /********************************************************************/
 unsigned char ch;
-unsigned int i;
+unsigned char character;
 /********************************************************************/
 // Local Prototypes
 /********************************************************************/
@@ -63,28 +63,49 @@ void main(void)
 
   for (;;)
   {
-    char output[30]; // Output buffer
-    Delay(250);
 
-    for (i = 0; i < 20; i++)
+     Delay(50);
+    SWL_TOG(SWL_RED); // run here o see if its running at 10 Hz on red pin
+
+    ch = rand() % 26 + 'A';
+
+    if (SCI0SR1_TDRE)
     {
-      ch = (rand() % 5) + 'a';
-
-      if (SWL_Pushed(SWL_CTR)) // if the button is pushed, transmit uppercase vowels
-        ch = toupper(ch);
-
-      // transmit only if the character is a vowel
-      if (ch == 'A' || ch == 'E' || ch == 'I' || ch == 'O' || ch == 'U')
-      {
-        if (SCI0SR1_TDRE)
-        {
-          SCI0DRL = ch;
-          SWL_ON(SWL_RED);
-        }
-      }
-        output[i] = ch; //store transmitted character in output buffer
+      SCI0DRL = ch;
     }
-    Delay(250);
+
+
+    // char vowels[5]= {'a', 'e', 'i', 'o', 'u'} // Output buffer
+    // ch = (rand() % 5);
+
+    // for(i=0;i<20;i++)
+    // {
+    //     vowels[ch];
+    // }
+    
+    
+    
+    //Delay(250);
+
+    // for (i = 0; i < 20; i++)
+    // {
+    //   ch = (rand() % 5) + 'a';
+
+    //   if (SWL_Pushed(SWL_CTR)) // if the button is pushed, transmit uppercase vowels
+    //     ch = toupper(ch);
+
+    //   // transmit only if the character is a vowel
+    //   if (ch == 'A' || ch == 'E' || ch == 'I' || ch == 'O' || ch == 'U')
+    //   {
+    //     if (SCI0SR1_TDRE)
+    //     {
+    //       SCI0DRL = ch;
+    //       SWL_ON(SWL_RED);
+    //     }
+    //   }
+    //     output[i] = ch; //store transmitted character in output buffer
+    // }
+    // Delay(250);
   }
 }
   /********************************************************************/
