@@ -54,7 +54,7 @@ void main(void)
   RTI_Init();
   Clock_Set20MHZ();
   SCI0BD=130;
-  SCI0R2_TE=1;
+  SCI0R2_TE=1;      
   SCI0R2_RE=1;
 
   /********************************************************************/
