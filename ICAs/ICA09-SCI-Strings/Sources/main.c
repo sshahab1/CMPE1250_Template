@@ -24,12 +24,12 @@
 // Defines
 /********************************************************************/
 unsigned char ch;
-unsigned char character;
+unsigned int i;
 /********************************************************************/
 // Local Prototypes
 /********************************************************************/
 
-Vowels(unsigned char ch);
+char GenerateVowels();
 /********************************************************************/
 // Global Variables
 /********************************************************************/
@@ -64,64 +64,107 @@ void main(void)
   for (;;)
   {
 
-     Delay(50);
-    SWL_TOG(SWL_RED); // run here o see if its running at 10 Hz on red pin
-
-    ch = rand() % 26 + 'A';
-
-    if (SCI0SR1_TDRE)
-    {
-      SCI0DRL = ch;
-    }
-
-
-    // char vowels[5]= {'a', 'e', 'i', 'o', 'u'} // Output buffer
-    // ch = (rand() % 5);
-
-    // for(i=0;i<20;i++)
-    // {
-    //     vowels[ch];
-    // }
+///////PART A //////////////////////////////////////////////////////////////////
+    // char str[21]; // Array to hold 20 characters plus '\0'
+    // int i;
     
-    
-    
-    //Delay(250);
-
+    // // Generate 20 random vowels and store them in str
     // for (i = 0; i < 20; i++)
     // {
-    //   ch = (rand() % 5) + 'a';
-
-    //   if (SWL_Pushed(SWL_CTR)) // if the button is pushed, transmit uppercase vowels
-    //     ch = toupper(ch);
-
-    //   // transmit only if the character is a vowel
-    //   if (ch == 'A' || ch == 'E' || ch == 'I' || ch == 'O' || ch == 'U')
+    //   char vowels = GenerateVowels();
+    //   if (SWL_Pushed(SWL_CTR))
     //   {
-    //     if (SCI0SR1_TDRE)
+    //     vowels = toupper(vowels);
+    //   }
+    //   SWL_ON(SWL_RED);
+    //   str[i] = vowels;
+    // }
+    // str[20] = '\0'; // Null-terminate the string
+  
+    // // Transmit the string
+    // sci0_txStr(str);
+    // // SWL_OFF(SWL_RED);
+    // Delay(250);
+
+///////PART B //////////////////////////////////////////////////////////
+char str[25]; // Array to hold 20 characters plus '\0' and space for sum
+    int i;
+    int sum = 0;
+
+    // Generate 20 random vowels and store them in str
+    for (i = 0; i < 20; i++) {
+        char vowel = GenerateVowels();
+        str[i] = vowel;
+        sum += (int)vowel; // Add ASCII value to sum
+    }
+    
+    // Append sum as a four-digit padded number with leading zeroes
+    sprintf(str + 20, " %04d ", sum);
+
+    // Transmit the string
+    sci0_txStr(str);
+
+
+
+
+    //   string randomVowels[]; // Output buffer
+
+    //   Delay(250);
+    //   string outputString;
+
+    //   ch = (rand() % 26) + 'a';
+
+    //   for (size_t i = 0; i < 20; i++)
+    //   {
+    //     if (less than 20)
     //     {
-    //       SCI0DRL = ch;
-    //       SWL_ON(SWL_RED);
+    //       if ('A E I O U')
+
+    //         output[i] = ch;
     //     }
     //   }
-    //     output[i] = ch; //store transmitted character in output buffer
+
+    //   char vowels[5] =
+    //       {
+    //           'A', 'E', 'I', 'O', 'U'};
+    //   ch = (rand() % 5) + vowels;
+
+    //   for (i = 0; i < 20; i++)
+    //   {
+    //     sprintf(ch, "iterate # %d",i);
+    //     sci0_txStr (&ch);
+    //   }
+
+    //   for (i = 0; i < 20; i++)
+    //   {
+    //     ch = (rand() % 26) + 'a';
+
+    //     if (SWL_Pushed(SWL_CTR)) // if the button is pushed, transmit uppercase vowels
+    //       ch = toupper(ch);
+
+    //     // transmit only if the character is a vowel
+    //     if (ch == 'A' || ch == 'E' || ch == 'I' || ch == 'O' || ch == 'U')
+    //     {
+    //       if (SCI0SR1_TDRE)
+    //       {
+    //         SCI0DRL = ch;
+    //         SWL_ON(SWL_RED);
+    //       }
+    //     }
+    //     output[i] = ch; // store transmitted character in output buffer
+    //   }
+    //   Delay(250);
     // }
-    // Delay(250);
   }
 }
-  /********************************************************************/
-  // Functions
-  /********************************************************************/
-  int Vowels(unsigned char ch)
-  {
-    if (ch == 'A' || ch == 'E' || ch == 'I' || ch == 'O' || ch == 'U')
-    {
-      return 1;
-    }
-    else
-    {
-      return 0;
-    }
-  }
-  /********************************************************************/
-  // Interrupt Service Routines
-  /********************************************************************/
+/********************************************************************/
+// Functions
+/********************************************************************/
+char GenerateVowels()
+{
+  char vowels[5] = {'a', 'e', 'i', 'o', 'u'};
+  return vowels[rand() % 5];
+}
+/********************************************************************/
+// Interrupt Service Routines
+/********************************************************************/

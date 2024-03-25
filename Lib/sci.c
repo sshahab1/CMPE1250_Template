@@ -4,7 +4,7 @@
 
 void sci0_Init(void)
 {
-   // SCI0BD = 130; // math: 20E6 / (9600*16)
+    //SCI0BD = 130; // math: 20E6 / (9600*16)
    SCI0BD = 65; //for 19200
    SCI0CR2 = 0b00001100;
 
