@@ -30,6 +30,7 @@ unsigned int i;
 /********************************************************************/
 
 char GenerateVowels();
+char GenerateVowelsUPPER();
 /********************************************************************/
 // Global Variables
 /********************************************************************/
@@ -87,24 +88,35 @@ void main(void)
     // Delay(250);
 
 ///////PART B //////////////////////////////////////////////////////////
-char str[25]; // Array to hold 20 characters plus '\0' and space for sum
-    int i;
-    int sum = 0;
+// char str[25]; // Array to hold 20 characters plus '\0' and space for sum
+//     int i;
+//     int sum = 0;
 
-    // Generate 20 random vowels and store them in str
+//     // Generate 20 random vowels and store them in str
+//     for (i = 0; i < 20; i++) {
+//         char vowel =  GenerateVowelsUPPER();
+//         str[i] = vowel;
+//         sum += (int)vowel; // Add ASCII value to sum
+//     }
+    
+//     // Append sum as a four-digit padded number with leading zeroes
+//     sprintf(str + 20, " %04d ", sum);
+
+//     // Transmit the string
+//     sci0_txStr(str);
+ int sum = 0;
+    int i;
+
+    // Generate 20 random vowels and calculate the sum of their ASCII values
     for (i = 0; i < 20; i++) {
-        char vowel = GenerateVowels();
-        str[i] = vowel;
+        char vowel = GenerateVowelsUPPER();
         sum += (int)vowel; // Add ASCII value to sum
     }
-    
-    // Append sum as a four-digit padded number with leading zeroes
-    sprintf(str + 20, " %04d ", sum);
 
-    // Transmit the string
-    sci0_txStr(str);
+    // Transmit the sum
+    printf("Sum of ASCII values of 'A', 'E', 'I', 'O', 'U' in 20 characters: %d\n", sum);
 
-
+Delay(250);
 
 
     //   string randomVowels[]; // Output buffer
@@ -163,6 +175,12 @@ char str[25]; // Array to hold 20 characters plus '\0' and space for sum
 char GenerateVowels()
 {
   char vowels[5] = {'a', 'e', 'i', 'o', 'u'};
+  return vowels[rand() % 5];
+}
+
+char GenerateVowelsUPPER()
+{
+  char vowels[5] = {'A', 'E', 'I', 'O', 'U'};
   return vowels[rand() % 5];
 }
 /********************************************************************/
