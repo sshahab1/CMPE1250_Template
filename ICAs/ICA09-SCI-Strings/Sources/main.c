@@ -25,6 +25,8 @@
 /********************************************************************/
 unsigned char ch;
 unsigned int i;
+// int sum=0;
+
 /********************************************************************/
 // Local Prototypes
 /********************************************************************/
@@ -44,6 +46,10 @@ char GenerateVowelsUPPER();
 /********************************************************************/
 void main(void)
 {
+  char str[21]; //array to hold 20 characters plus '\0'
+  char array[21];
+    int i;
+    int sum=0;
   // Any main local variables must be declared here
 
   // main entry point
@@ -66,107 +72,40 @@ void main(void)
   {
 
 ///////PART A //////////////////////////////////////////////////////////////////
-    // char str[21]; // Array to hold 20 characters plus '\0'
-    // int i;
     
-    // // Generate 20 random vowels and store them in str
-    // for (i = 0; i < 20; i++)
-    // {
-    //   char vowels = GenerateVowels();
-    //   if (SWL_Pushed(SWL_CTR))
-    //   {
-    //     vowels = toupper(vowels);
-    //   }
-    //   SWL_ON(SWL_RED);
-    //   str[i] = vowels;
-    // }
-    // str[20] = '\0'; // Null-terminate the string
-  
-    // // Transmit the string
-    // sci0_txStr(str);
-    // // SWL_OFF(SWL_RED);
-    // Delay(250);
+    //generate 20 random vowels and store them in str
+    for (i = 0; i < 20; i++)
+    {
+      char vowels = GenerateVowels();
+      if (SWL_Pushed(SWL_CTR) > 0)
+      {
+        vowels = toupper(vowels);
+      }
+      SWL_ON(SWL_RED);
+      str[i] = vowels;
+      sum += (int)vowels;
+
+
+    }
+    str[20] = '\0'; //null-terminate the string
+
+
+    sprintf(array, "%04d", sum++);
+    //transmit the string
+    sci0_txStr(str);
+    sci0_txStr(array);
+    // SWL_OFF(SWL_RED);
+    Delay(250);
 
 ///////PART B //////////////////////////////////////////////////////////
-// char str[25]; // Array to hold 20 characters plus '\0' and space for sum
-//     int i;
-//     int sum = 0;
 
-//     // Generate 20 random vowels and store them in str
-//     for (i = 0; i < 20; i++) {
-//         char vowel =  GenerateVowelsUPPER();
-//         str[i] = vowel;
-//         sum += (int)vowel; // Add ASCII value to sum
-//     }
-    
-//     // Append sum as a four-digit padded number with leading zeroes
-//     sprintf(str + 20, " %04d ", sum);
-
-//     // Transmit the string
-//     sci0_txStr(str);
- int sum = 0;
-    int i;
-
-    // Generate 20 random vowels and calculate the sum of their ASCII values
-    for (i = 0; i < 20; i++) {
-        char vowel = GenerateVowelsUPPER();
-        sum += (int)vowel; // Add ASCII value to sum
-    }
-
-    // Transmit the sum
-    printf("Sum of ASCII values of 'A', 'E', 'I', 'O', 'U' in 20 characters: %d\n", sum);
-
-Delay(250);
+//A=65
+//E=69
+//I=73
+//O=79
+//U=85
 
 
-    //   string randomVowels[]; // Output buffer
-
-    //   Delay(250);
-    //   string outputString;
-
-    //   ch = (rand() % 26) + 'a';
-
-    //   for (size_t i = 0; i < 20; i++)
-    //   {
-    //     if (less than 20)
-    //     {
-    //       if ('A E I O U')
-
-    //         output[i] = ch;
-    //     }
-    //   }
-
-    //   char vowels[5] =
-    //       {
-    //           'A', 'E', 'I', 'O', 'U'};
-    //   ch = (rand() % 5) + vowels;
-
-    //   for (i = 0; i < 20; i++)
-    //   {
-    //     sprintf(ch, "iterate # %d",i);
-    //     sci0_txStr (&ch);
-    //   }
-
-    //   for (i = 0; i < 20; i++)
-    //   {
-    //     ch = (rand() % 26) + 'a';
-
-    //     if (SWL_Pushed(SWL_CTR)) // if the button is pushed, transmit uppercase vowels
-    //       ch = toupper(ch);
-
-    //     // transmit only if the character is a vowel
-    //     if (ch == 'A' || ch == 'E' || ch == 'I' || ch == 'O' || ch == 'U')
-    //     {
-    //       if (SCI0SR1_TDRE)
-    //       {
-    //         SCI0DRL = ch;
-    //         SWL_ON(SWL_RED);
-    //       }
-    //     }
-    //     output[i] = ch; // store transmitted character in output buffer
-    //   }
-    //   Delay(250);
-    // }
   }
 }
 /********************************************************************/
