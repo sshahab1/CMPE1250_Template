@@ -48,9 +48,10 @@ void main(void)
 {
   char display[80];
   char str[21]; // array to hold 20 characters plus '\0'
-  char array[20];
+  char array[21];
   int i;
   int sum = 0;
+
   // Any main local variables must be declared here
 
   // main entry point
@@ -84,15 +85,17 @@ void main(void)
       }
       SWL_ON(SWL_RED);
       str[i] = vowels;
+      
       sum += (int)vowels;
     }
     str[20] = '\0'; // null-terminate the string
     
-   // sprintf(str, "\x1b[33m Here are the vowels.");
-    //transmit the string
+    
+    sprintf("\x1b[35m Here are the vowels:", str );
+ 
     sci0_txStr(str);
 
-    sprintf(str, "\x1b[35m ASCII: %d ", sum);
+    sprintf(str, "\x1b[31m \x1b[7;1H  ASCII: %d ", sum); //red
 
     //transmit the string
     sci0_txStr(str);
