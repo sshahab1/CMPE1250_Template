@@ -87,18 +87,21 @@ void main(void)
       str[i] = vowels;
       
       sum += (int)vowels;
-    }
+    } 
     str[20] = '\0'; // null-terminate the string
     
+    sci0_txStr("\x1b[32m \x1b[1;5H Saamia Shahab"); //green
     
-    sprintf("\x1b[35m Here are the vowels:", str );
+    sci0_txStr("\x1b[35m \x1b[6;1H  vowels: ");
+
+    sprintf( "\x1b[35m \x1b[6;1H vowels:", str); //Magenta
  
     sci0_txStr(str);
 
-    sprintf(str, "\x1b[31m \x1b[7;1H  ASCII: %d ", sum); //red
+    sprintf(array, "\x1b[31m \x1b[7;1H  ASCII: %d ", sum); //red
 
     //transmit the string
-    sci0_txStr(str);
+    sci0_txStr(array);
     
     //sci0_txStr("\x1b[35m Hello World !! ");
 
