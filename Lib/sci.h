@@ -68,7 +68,7 @@ unsigned char sci0_rxByte(unsigned char * pData);
 
 // send a null-terminated string over SCI
 void sci0_txStr (char const * straddr);
-
+ 
 //////////////////////*****ICA08*******/////////////////////////////////
 // initialize SCI0 at 9600 BAUD
 void sci0_Init (void);

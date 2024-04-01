@@ -27,15 +27,33 @@ void sci0_Init(void)
 // //     return 0;
 // // }
 //  }
-void sci0_txByte(unsigned char data)
+
+///////////////mine/////////////////////
+// void sci0_txByte(unsigned char data)
+// {
+//     if (SCI0SR1_TDRE)
+//     {
+//         SCI0DRL = data;
+//     }
+// }
+// void sci0_txStr (char const * straddr)
+// {
+// for (; *straddr; ++straddr)
+// sci0_txByte (*straddr);
+// }
+
+
+
+// send a byte to SCI0 (blocking)
+void sci0_txByte (unsigned char data)
 {
-    if (SCI0SR1_TDRE)
-    {
-        SCI0DRL = data;
-    }
+while (!SCI0SR1_TDRE); //Blocking
+//if(SCI0SR1_TDRE) // non blocking
+SCI0DRL = data;
 }
 void sci0_txStr (char const * straddr)
 {
 for (; *straddr; ++straddr)
 sci0_txByte (*straddr);
 }
+

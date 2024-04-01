@@ -24,8 +24,8 @@
 // Defines
 /********************************************************************/
 unsigned char ch;
-unsigned int i;
-// int sum=0;
+// unsigned int i;
+// unsigned int sum;
 
 /********************************************************************/
 // Local Prototypes
@@ -46,10 +46,11 @@ char GenerateVowelsUPPER();
 /********************************************************************/
 void main(void)
 {
-  char str[21]; //array to hold 20 characters plus '\0'
-  char array[21];
-    int i;
-    int sum=0;
+  char display[80];
+  char str[21]; // array to hold 20 characters plus '\0'
+  char array[20];
+  int i;
+  int sum = 0;
   // Any main local variables must be declared here
 
   // main entry point
@@ -71,9 +72,9 @@ void main(void)
   for (;;)
   {
 
-///////PART A //////////////////////////////////////////////////////////////////
-    
-    //generate 20 random vowels and store them in str
+    ///////PART A //////////////////////////////////////////////////////////////////
+
+    // generate 20 random vowels and store them in str
     for (i = 0; i < 20; i++)
     {
       char vowels = GenerateVowels();
@@ -84,27 +85,26 @@ void main(void)
       SWL_ON(SWL_RED);
       str[i] = vowels;
       sum += (int)vowels;
-
-
     }
-    str[20] = '\0'; //null-terminate the string
-
-
-    sprintf(array, "%04d", sum++);
+    str[20] = '\0'; // null-terminate the string
+    
+   // sprintf(str, "\x1b[33m Here are the vowels.");
     //transmit the string
     sci0_txStr(str);
-    sci0_txStr(array);
+
+    sprintf(str, "\x1b[35m ASCII: %d ", sum);
+
+    //transmit the string
+    sci0_txStr(str);
+    
+    //sci0_txStr("\x1b[35m Hello World !! ");
+
+    sum=0;
+
+    //sci0_txStr(display);
+
     // SWL_OFF(SWL_RED);
-    Delay(250);
-
-///////PART B //////////////////////////////////////////////////////////
-
-//A=65
-//E=69
-//I=73
-//O=79
-//U=85
-
+   Delay(250);
 
   }
 }
