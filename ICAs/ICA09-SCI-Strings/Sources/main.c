@@ -70,6 +70,7 @@ void main(void)
   // main program loop
   /********************************************************************/
 
+  sci0_txStr("\x1b[32m \x1b[1;5H Saamia Shahab"); //green
   for (;;)
   {
 
@@ -90,7 +91,6 @@ void main(void)
     } 
     str[20] = '\0'; // null-terminate the string
     
-    sci0_txStr("\x1b[32m \x1b[1;5H Saamia Shahab"); //green
     
     sci0_txStr("\x1b[35m \x1b[6;1H  vowels: ");
 
