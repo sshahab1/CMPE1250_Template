@@ -6,7 +6,7 @@
 void PLL_To20MHz (void)
 {
     SYNR = 4;
-    REFDV = 3;
+    REFDV = 3; 
 
     CLKSEL_PSTP = 1; 
     PLLCTL = 0b11111111; //monitor enable
