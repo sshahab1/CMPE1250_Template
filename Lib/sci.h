@@ -68,10 +68,9 @@ unsigned char sci0_rxByte(unsigned char * pData);
 
 // send a null-terminated string over SCI
 void sci0_txStr (char const * straddr);
- 
+ void sci0_Init(void);
 //////////////////////*****ICA08*******/////////////////////////////////
-// initialize SCI0 at 9600 BAUD
-void sci0_Init (void);
+
 // non-blocking read of a byte, returns 1 if data present, otherwise 0
 int sci0_read (unsigned char * pData);
 // send a byte to SCI0 (blocking)

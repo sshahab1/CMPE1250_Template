@@ -67,18 +67,18 @@ void main(void)
   RTI_Init();
   sci0_Init();
   Clock_Set20MHZ();
-  // SCI0BD = 32; // for 38400 20000000/16/38400  -----lab1 -----
-  // SCI0CR2 = 0b00001100;
-  // displaying name and description
-  sci0_txStr("\x1b[1;1H Saamia Shahab");
-
-  sci0_txStr("\x1b[2;1H Simple Binary Calculator");
+  //SCI0BD = 32; 
+  //SCI0CR2 = 0b00001100;
+  
   /********************************************************************/
   // main program loop
   /********************************************************************/
   for (;;)
   {
+// displaying name and description
+  sci0_txStr("\x1b[1;1H Saamia Shahab");
 
+  sci0_txStr("\x1b[2;1H Simple Binary Calculator");
     // Draw initial state
     DrawState(operandA, operandB, op);
   
