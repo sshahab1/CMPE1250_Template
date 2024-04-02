@@ -54,49 +54,23 @@ typedef SCI_Typedef* SCI_Base;
 //SCI0 - Normal mode: RDX0-> PS0 (PIN 89), TDX0-> PS1 (PIN 90)
 // set baud, returns actual baud
 //unsigned long sci0_Init(unsigned long ulBaudRate, int iRDRF_Interrupt);
+// void sci0_Init(void);
+// void sci0_txByte(unsigned char data);
+// void sci0_txStr(char const *straddr);
+// // blocking byte read
+// // waits for a byte to arrive and returns it
+// unsigned char sci0_bread(void);
 
-// blocking byte read
-// waits for a byte to arrive and returns it
-unsigned char sci0_bread(void);
-
-// read a byte, non-blocking
-// returns 1 if byte read, 0 if not
-unsigned char sci0_rxByte(unsigned char * pData);
+// // read a byte, non-blocking
+// // returns 1 if byte read, 0 if not
+// unsigned char sci0_rxByte(unsigned char * pData);
 
 // send a byte over SCI
 //void sci0_txByte (unsigned char data);
 
 // send a null-terminated string over SCI
-void sci0_txStr (char const * straddr);
- void sci0_Init(void);
-//////////////////////*****ICA08*******/////////////////////////////////
+//void sci0_txStr (char const * straddr);
 
-// non-blocking read of a byte, returns 1 if data present, otherwise 0
-int sci0_read (unsigned char * pData);
-// send a byte to SCI0 (blocking)
-void sci0_txByte (unsigned char data);
-///////////////////////////////////////////////////////////////
-
-
-////////////////////////////LAB01///////////////////////////////
-typedef enum
-{
-    AND,
-    OR
-} Operation;
-int sci0_Peek (void);
-void sci0_GotoXY (int iCol, int iRow);
-void sci0_txStrXY (int iCol, int iRow, char const * straddr);
-void sci0_ClearScreen (void);
-void sci0_ShowBin16 (unsigned int iVal);
-int ToDigitVal (char digit);
-
- unsigned int HexArrayToUInt16(char *pArray);
-void DrawState(unsigned int iOPA, unsigned int iOPB, Operation op);
-
-
-///////////////////////////////////////////////////////////////
- 
 /* BASIC FUNCTIONS END*******************************************************/
 
 
@@ -110,10 +84,31 @@ SCI4 - Shared with SPI2 and LCD -      RDX4-> PH4 (PIN 35), TDX4-> PH5 (PIN 34)
 SCI5 - Shared with SPI2 and LCD -      RDX5-> PH6 (PIN 33), TDX5-> PH7 (PIN 32)
 */
 
-//ADVANCED FUNCTIONS  - To Work with any sci*************************************
-int sci_Init(SCI_Base sci, unsigned long ulBaudRate, int iRDRF_Interrupt);
-unsigned char sci0_rxByte(unsigned char * pData);
-void sci_txByte (SCI_Base sci, unsigned char data);
-void sci_txStr (SCI_Base sci, char const *straddr);
-unsigned char sci_rxByte(SCI_Base sci, unsigned char * pData);
+// //ADVANCED FUNCTIONS  - To Work with any sci*************************************
+// int sci_Init(SCI_Base sci, unsigned long ulBaudRate, int iRDRF_Interrupt);
+// unsigned char sci0_rxByte(unsigned char * pData);
+// void sci_txByte (SCI_Base sci, unsigned char data);
+// void sci_txStr (SCI_Base sci, char const *straddr);
+// unsigned char sci_rxByte(SCI_Base sci, unsigned char * pData);
 /* ADVANCED FUNCTIONS END*******************************************************/
+
+
+
+//////////////////LAB1//////////////////////
+typedef enum
+{
+    AND,
+    OR
+} Operation;
+void sci0_Init(void);
+void sci0_txByte(unsigned char data);
+void sci0_txStr(char const *straddr);
+int sci0_Peek (void);
+void sci0_GotoXY (int iCol, int iRow);
+void sci0_txStrXY (int iCol, int iRow, char const * straddr);
+void sci0_ClearScreen (void);
+void sci0_ShowBin16 (unsigned int iVal);
+int ToDigitVal (char digit);
+
+ unsigned int HexArrayToUInt16(char *pArray);
+void DrawState(unsigned int iOPA, unsigned int iOPB, Operation op);
