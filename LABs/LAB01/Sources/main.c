@@ -16,6 +16,7 @@
 #include "sw_led.h"
 #include "rti.h"
 #include "clock.h"
+// #include "sci.h"
 // Other system includes or your includes go here
 #include <stdlib.h>
 #include <stdio.h>
@@ -23,19 +24,20 @@
 /********************************************************************/
 // Defines
 /********************************************************************/
- typedef enum {
-    AND,
-    OR
+typedef enum
+{
+  AND,
+  OR
 } Operation;
 
- char operand1[5];
- char operand2[5]; 
- Operation operation;
+char operand1[5];
+char operand2[5];
+Operation operation;
 int x;
 int y;
-        unsigned int operandA = 0x1234;
-    unsigned int operandB = 0xABCD;
-    Operation op = AND;
+unsigned int operandA = 0x1234;
+unsigned int operandB = 0xABCD;
+Operation op = AND;
 
 /********************************************************************/
 // Local Prototypes
@@ -65,11 +67,12 @@ void main(void)
   RTI_Init();
   sci0_Init();
   Clock_Set20MHZ();
+  // SCI0BD = 32; // for 38400 20000000/16/38400  -----lab1 -----
+  // SCI0CR2 = 0b00001100;
+  // displaying name and description
+  sci0_txStr("\x1b[1;1H Saamia Shahab");
 
-  //displaying name and description
-  sci0_txStr("\x1b[1;1H Saamia Shahab"); 
- 
-  sci0_txStr("\x1b[2;1H Simple Binary Calculator"); 
+  sci0_txStr("\x1b[2;1H Simple Binary Calculator");
   /********************************************************************/
   // main program loop
   /********************************************************************/
@@ -78,6 +81,7 @@ void main(void)
 
     // Draw initial state
     DrawState(operandA, operandB, op);
+  
   }
 }
 /********************************************************************/
