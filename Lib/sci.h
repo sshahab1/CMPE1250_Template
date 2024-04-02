@@ -78,6 +78,20 @@ int sci0_read (unsigned char * pData);
 void sci0_txByte (unsigned char data);
 ///////////////////////////////////////////////////////////////
 
+
+////////////////////////////LAB01///////////////////////////////
+
+int sci0_Peek (void);
+void sci0_GotoXY (int iCol, int iRow);
+void sci0_txStrXY (int iCol, int iRow, char const * straddr);
+void sci0_ClearScreen (void);
+void sci0_ShowBin16 (unsigned int iVal);
+int ToDigitVal (char digit);
+unsigned int HexArrayToUInt16 (char * pArray);
+void DrawState (unsigned int iOPA, unsigned int iOPB, Operation op);
+
+
+///////////////////////////////////////////////////////////////
  
 /* BASIC FUNCTIONS END*******************************************************/
 
