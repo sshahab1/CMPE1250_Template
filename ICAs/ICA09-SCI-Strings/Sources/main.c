@@ -91,7 +91,7 @@ void main(void)
     // generate 20 random vowels and store them in str
     for (i = 0; i < 20; i++)
     {
-      char vowels = GenerateVowels();
+      char vowels = GenerateVowels(); 
       if (SWL_Pushed(SWL_CTR) > 0)
       {
         vowels = toupper(vowels);

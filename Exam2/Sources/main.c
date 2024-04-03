@@ -1,10 +1,10 @@
 /********************************************************************/
-// HC12 Program:  ICA07
+// HC12 Program: Exam2
 // Processor:     MC9S12XDP512
 // Bus Speed:     40 MHz
 // Author:        Saamia
-// Details:       A more detailed explanation of the program is entered here
-// Date:          Date Created
+// Details:       
+// Date:         April  2024
 // Revision History :
 //  each revision will have a date + desc. of changes
 
@@ -16,6 +16,7 @@
 #include "sw_led.h"
 #include "rti.h"
 #include "clock.h"
+
 // Other system includes or your includes go here
 #include <stdlib.h>
 #include <stdio.h>
@@ -23,14 +24,16 @@
 /********************************************************************/
 // Defines
 /********************************************************************/
-unsigned long i = 0;
-unsigned char ch;
 unsigned char character;
+unsigned char ch;
+// unsigned int i;
+// unsigned int sum;
+unsigned int count;
 /********************************************************************/
 // Local Prototypes
 /********************************************************************/
-int Switches(void);
-Vowels(unsigned char ch);
+
+
 /********************************************************************/
 // Global Variables
 /********************************************************************/
@@ -44,6 +47,10 @@ Vowels(unsigned char ch);
 /********************************************************************/
 void main(void)
 {
+int i;
+ char str[80];
+ char array[50];
+
   // Any main local variables must be declared here
 
   // main entry point
@@ -57,7 +64,7 @@ void main(void)
   RTI_Init();
   sci0_Init();
   Clock_Set20MHZ();
-  // SCI0BD=130;
+
 
   /********************************************************************/
   // main program loop
@@ -65,74 +72,76 @@ void main(void)
 
   for (;;)
   {
-    Delay(50);
-    SWL_TOG(SWL_RED); // run here o see if its running at 10 Hz on red pin
 
-    ch = rand() % 26 + 'A';
+    Delay(10);
+     SWL_TOG(SWL_RED);
 
-    if (SCI0SR1_TDRE)
+  for(i=0;i<80;i++)
+  {
+    char dot = '.';
+    str[i] = dot;
+   
+   
+
+   if(SWL_Pushed(SWL_UP))
+  {
+    char exclamation = '!';
+    str[i]= exclamation;
+  }
+  if(SWL_Pushed(SWL_DOWN))
+  {
+     char question = '?';
+    str[i]= question;
+  }
+  if(SWL_Pushed(SWL_CTR))
+  {
+     char dot = '.';
+    str[i] = dot;
+  }
+    count++;
+   SWL_TOG(SWL_GREEN);
+
+ 
+
+  }
+
+
+    //sci0_txByte('.');
+
+  str[10] = '\0'; 
+ 
+ if (SCI0SR1 & SCI0SR1_RDRF_MASK) // check if a character has been received
     {
-      SCI0DRL = ch;
+        ch=SCI0DRL;
+        if(ch=='R'||ch=='r')
+        {
+             sprintf(array, "\x1b[1;1H \x1b[31m Count: %05d ", count);
+        }
+         else if(ch=='G'||ch=='g')
+        {
+             sprintf(array, "\x1b[1;1H \x1b[32m Count: %05d ", count);
+        }
+         else if(ch=='B'||ch=='b')
+        {
+             sprintf(array, "\x1b[1;1H \x1b[34m Count: %05d ", count);
+        }
+
     }
-    // sci0_read(unsigned char *pData) if charcter recieved
-
-    // if(Vowels(ch)){
-    //   SWL_ON(SWL_GREEN);
-    //   SWL_OFF(SWL_YELLOW);
-    // }
-    // else{
-    //   SWL_ON(SWL_YELLOW);
-    //   SWL_OFF(SWL_GREEN); 
-    // }
-
-    // character = SCI0DRL;
-    // char * keych = &character;
-
-    // SCI0DRL - READS FROM KEYBOEARD
-    
-  //  if(SCI0SR1_RDRF)
-//      {
-//         pData = SCI0DRL;
-//      
-//     }
 
     
-    if (SCI0SR1 & SCI0SR1_RDRF_MASK) // check if a character has been received
-    {
-      // sci0_read(&character);
-      // &keych = SCI0DRL;
+ //sprintf(array, "\x1b[1;1H Count: %05d ", count);
+ sci0_txStr(array);
+
+  sci0_txStr("\x1b[3;1H     ");
+
+ sci0_txStr(str);
      
-        character=SCI0DRL;
-        
-        if (Vowels(character))
-        {
-          SWL_ON(SWL_GREEN);
-          SWL_OFF(SWL_YELLOW);
-        }
-        else
-        {
-          SWL_ON(SWL_YELLOW);
-          SWL_OFF(SWL_GREEN);
-        }
-      
-    }
   }
 }
-
 /********************************************************************/
 // Functions
 /********************************************************************/
-int Vowels(unsigned char ch)
-{
-  if (ch == 'A' || ch == 'E' || ch == 'I' || ch == 'O' || ch == 'U')
-  {
-    return 1;
-  }
-  else
-  {
-    return 0;
-  }
-}
+
 /********************************************************************/
 // Interrupt Service Routines
 /********************************************************************/
