@@ -111,4 +111,14 @@ void sci0_ShowBin16 (unsigned int iVal);
 int ToDigitVal (char digit);
 
  unsigned int HexArrayToUInt16(char *pArray);
-void DrawState(unsigned int iOPA, unsigned int iOPB, Operation op);
+// void DrawState(unsigned int iOPA, unsigned int iOPB, Operation op);
+
+
+/////         my new functions       --------------------------------
+void positioning (int row, int col);
+// blocking send of a byte
+void SCI0_BSend (unsigned char data)
+// blocking send of a string
+void SCI0_TxString (char * buff);
+// blocking send of a 16-bit HEX value as 0x0000
+void SCI0_Tx16H (unsigned int uiVal, int tl);

@@ -20,6 +20,12 @@ void sci0_txStr(char const *straddr)
         sci0_txByte(*straddr);
 }
 
+void positioning (int row, int col)
+{
+    sprintf("\x1b[%d;%dH", row, col); //red
+
+}
+
 ////LAB01////////////////////////////////
 // return 1 if RDRF set, otherwise return 0
 int sci0_Peek(void)
@@ -42,8 +48,9 @@ void sci0_GotoXY(int iCol, int iRow)
 // use sci0_GotoXY and sci0_txStr to place the string
 void sci0_txStrXY(int iCol, int iRow, char const *straddr) ////need help with this
 {
-    sci0_GotoXY(iCol, iRow);
-    sci0_txStr(&straddr);
+    //sci0_GotoXY(iCol, iRow);
+    //sprintf(straddr, "\x1b[%d;%dH", iRow, iCol);
+    sci0_txStr(straddr);
 }
 // use an escape sequence to clear the terminal
 void sci0_ClearScreen(void)
@@ -112,40 +119,103 @@ unsigned int HexArrayToUInt16(char *pArray)
     //     printf("Numerical value of hex array: %u\n", value);
     //     return 0;
 }
-void DrawState(unsigned int iOPA, unsigned int iOPB, Operation op)
-{ //////////////fix this for performance
 
-    sci0_ClearScreen();
-    // sci0_txStrXY(5, 5, "OP A: %d", &iOPA); // hex
-    // sci0_txStrXY(5, 6, "OP B: %d", &iOPB); // hex
-    char hexArray[20];
-    sprintf(hexArray, "  ", iOPA);
-    sci0_txStr(hexArray);
+// void DrawState(unsigned int iOPA, unsigned int iOPB, Operation op)
+// { //////////////fix this for performance
 
+//     sci0_ClearScreen();
+//     // sci0_txStrXY(5, 5, "OP A: %d", &iOPA); // hex
+//     // sci0_txStrXY(5, 6, "OP B: %d", &iOPB); // hex
 
-     char hexArrayB[20];
-    sprintf(hexArrayB, "  ", iOPB);
-    sci0_txStr(hexArrayB)
+//     char hexArray[20];
+//     char hexArrayB[20];
 
-        sci0_ShowBin16(iOPA);        // binary
-    sci0_txStrXY(11, 8, "%d", iOPA); // 0111000
+//     sprintf(hexArray, " %d ", iOPA);
+//     sci0_txStr(hexArray);
 
-    sci0_ShowBin16(iOPB);                   // binary
-    sci0_txStrXY(11, 9, "OP B: %d", &iOPB); // 010101011
+//     sprintf(hexArrayB, " %d ", iOPB);
+//     sci0_txStr(hexArrayB)
 
-    sci0_txStrXY(9, 9, "%d", &op);
+//         sci0_ShowBin16(iOPA);        // binary
+//     sci0_txStrXY(11, 8, "%d", iOPA); // 0111000
 
-    sci0_txStr(11, 10, "--------------------------");
-    unsigned int result;
-    if (op == AND)
-    {
-        result = iOPA & iOPB;
-        sci0_txStrXY(11, 11, "RESULT: ");
-    }
-    else
-    {
-        result = iOPA | iOPB;
-        sci0_txStrXY(11, 11, "RESULT: ");
-    }
-    sci0_ShowBin16(result); //
+//     sci0_ShowBin16(iOPB);                   // binary
+//     sci0_txStrXY(11, 9, "OP B: %d", &iOPB); // 010101011
+
+//     sci0_txStrXY(9, 9, "%d", &op);
+
+//     sci0_txStr(11, 10, "--------------------------");
+//     unsigned int result = 0;
+//     if (op == AND)
+//     {
+//         result = iOPA & iOPB;
+//         sci0_txStrXY(11, 11, "RESULT: ");
+//     }
+//     else
+//     {
+//         result = iOPA | iOPB;
+//         sci0_txStrXY(11, 11, "RESULT: ");
+//     }
+//     sci0_ShowBin16(result); //
+// // }
+
+// void DrawState(unsigned int iOPA, unsigned int iOPB, Operation op) {
+//     sci0_ClearScreen();
+
+//     // Display operand A in hexadecimal
+//      char hexArrayA[6];
+//     sprintf(hexArrayA, "OP A: %0d", iOPA);
+//     sci0_txStrXY(5, 5, hexArrayA);
+
+//     // Display operand B in hexadecimal
+//      char hexArrayB[6];
+//     sprintf(hexArrayB, "OP B: %d", iOPB);
+//     sci0_txStrXY(5, 6, hexArrayB);
+
+//     // Display binary representation of operand A
+//     sci0_txStrXY(5, 8, "Binary OP A: ");
+//     sci0_ShowBin16(iOPA);
+
+//     // Display binary representation of operand B
+//     sci0_txStrXY(5, 9, "Binary OP B: ");
+//     sci0_ShowBin16(iOPB);
+
+//     // Draw a line
+//     sci0_txStrXY(5, 10, "--------------------------");
+
+//     // Calculate and display the result
+//     unsigned int result = (op == AND) ? (iOPA & iOPB) : (iOPA | iOPB);
+//     sci0_txStrXY(5, 11, "RESULT: ");
+//     sci0_ShowBin16(result);
+// }
+
+void SCI0_BSend (unsigned char data)
+{
+	// transmit buffer empty?
+	while (!(UCSR0A & (1<<UDRE0)))
+	;
+
+	// transmit complete must be cleared before send in polling mode
+	if (UCSR0A & (1<<TXC0))
+	UCSR0A = (1<<TXC0);
+
+	// free to send data
+	UDR0 = data;
+}
+void SCI0_TxString (char * buff)
+{
+  while (*buff)
+  {
+    SCI0_BSend(*buff);
+    ++buff;
+  }
+}
+void SCI0_Tx16H (unsigned int uiVal, int tl)
+{
+	char buff[7] = {0};
+	(void)sprintf(buff, "0x%4.4X", uiVal);
+	SCI0_TxString (buff);
+
+	if (tl)
+		SCI0_TxString ("\r\n");
 }

@@ -30,15 +30,19 @@ typedef enum
   OR
 } Operation;
 
-char operand1[5];
-char operand2[5];
-Operation operation;
-int x;
-int y;
-// unsigned int operandA = 0x1234;
-// unsigned int operandB = 0xABCD;
+// char operand1[5];
+// char operand2[5];
+Operation operation = AND;
+
+
+char operand1[5] = 0x1234;
+char operand2[5] = 0xABCD;
 // Operation op = AND;
 unsigned char character;
+
+char A = 0x1234;
+char B = 0xABCD;
+
 /********************************************************************/
 // Local Prototypes
 /********************************************************************/
@@ -56,6 +60,11 @@ unsigned char character;
 /********************************************************************/
 void main(void)
 {
+unsigned int result;
+char arrayop1[5];
+char arrayop2[5];
+unsigned int x;
+unsigned int y;
   // main entry point
   _DISABLE_COP();
   EnableInterrupts;
@@ -76,27 +85,67 @@ void main(void)
   for (;;)
   {
     // displaying name and description
-    sci0_txStr("\x1b[1;1H Saamia Shahab");
+    // sci0_txStr("\x1b[1;1H Saamia Shahab");
 
-    sci0_txStr("\x1b[2;1H Simple Binary Calculator");
-    // Draw initial state
-    DrawState(0x1234, 0xABCD, operation);
+    // sci0_txStr("\x1b[2;1H Simple Binary Calculator");
+    sci0_txStr("\x1b[3;1H  ");
 
-    if (SCI0SR1 & SCI0SR1_RDRF_MASK) // check if a character has been received
-    {
-      character = SCI0DRL;
-      if (character == '&')
-      {
-        operation = AND;
-        DrawState(0x1234, 0xABCD, operation);
-      }
-      else if (character == '|')
-      {
-        operation = OR;
-        DrawState(0x1234, 0xABCD, operation);
-      }
+    sci0_txStr("OP A: ");
+    sci0_txByte(operand1);
+    sci0_txStr(" ( ");
+    x=HexArrayToUInt16(&operand1);
+    sprintf(arrayop1, " HEXNUM1 %d ", x);
+    sci0_txStr(arrayop1);
+    sci0_txStr(" ) ");
 
-    }
+    sci0_txStr(" OP B: ");
+    sci0_txByte(operand2);
+    sci0_txStr(" ( ");
+    y=HexArrayToUInt16(&operand2);
+    sprintf(arrayop2, " HEXNUM2 %d ", y);
+     sci0_txStr(arrayop2);
+    sci0_txStr(" ) ");
+
+    sci0_txStr("Binary OP A: ");
+    sci0_ShowBin16(HexArrayToUInt16(&operand1));
+  
+
+    sci0_txStr("Binary OP B: ");
+    sci0_ShowBin16(HexArrayToUInt16(&operand2));
+
+   
+
+    // if (SCI0SR1 & SCI0SR1_RDRF_MASK) // check if a character has been received
+    // {
+    //   character = SCI0DRL;
+    //   if (character == '&')
+    //   {
+    //     operation = AND;
+    //     //DrawState(0x1234, 0xABCD, operation);
+    //   }
+    //   else if (character == '|')
+    //   {
+    //     operation = OR;
+    //    // DrawState(0x1234, 0xABCD, operation);
+    //   }
+
+    // }
+
+    // if (operation == AND)
+    // {
+    //   result = HexArrayToUInt16(operand1) & HexArrayToUInt16(operand2);
+    //   sci0_txStr("Result (AND): ");
+    // }
+    // else
+    // {
+    //   result = HexArrayToUInt16(operand1) | HexArrayToUInt16(operand2);
+    //   sci0_txStr("Result (OR): ");
+    // }
+
+    // Draw the result in binary
+    //sci0_ShowBin16(result);
+
+
   }
 }
 /********************************************************************/
