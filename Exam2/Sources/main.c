@@ -48,7 +48,7 @@ unsigned int count;
 void main(void)
 {
 int i;
- char str[80];
+ char str[79];
  char array[50];
 
   // Any main local variables must be declared here
@@ -76,7 +76,7 @@ int i;
     Delay(10);
      SWL_TOG(SWL_RED);
 
-  for(i=0;i<80;i++)
+  for(i=0;i<79;i++)
   {
     char dot = '.';
     str[i] = dot;
@@ -108,7 +108,7 @@ int i;
 
     //sci0_txByte('.');
 
-  str[10] = '\0'; 
+  str[79] = '\0'; 
  
  if (SCI0SR1 & SCI0SR1_RDRF_MASK) // check if a character has been received
     {
