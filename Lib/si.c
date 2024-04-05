@@ -4,7 +4,7 @@
 
 void sci0_Init(void)
 {
-    SCI0BD = 65;
+    SCI0BD = 130;
     SCI0CR2 = 0b00001100;
 }
 void sci0_txByte(unsigned char data)
@@ -59,26 +59,38 @@ void sci0_ClearScreen(void)
 }
 void sci0_ShowBin16(unsigned int iVal)
 {
-    int i;
-    for (i = 15; i >= 0; i--)
-    {
-        // sci0_txByte(iVal & 0x80 ? '1' : '0');
-        // iVal <<= 1;
 
-        if (iVal & (1 << i))
-        {
-            sci0_txStr("1");
-        }
-        else
-        {
-            sci0_txStr("0");
-        }
+    int binaryNum[100000];
+    char array[100000];
+    int i = 0;
+    int j=0;
+    while (iVal > 0) {
+        binaryNum[i] = iVal % 2;
+        iVal = iVal / 2;
+        i++;
     }
-    // unsigned int value = 1234; // Example value
-    // sprintf("Binary representation of %d is: ", value);
-    // sci0_ShowBin16(value);
-    // sprintf("\n");
-    // return 0;
+
+    // Print the binary number in reverse order
+    for ( j = i - 1; j >= 0; j--) {
+        array[j] = binaryNum[j] ;
+       
+    }
+      sci0_txStr(array);
+    // int i;
+    // for (i = 15; i >= 0; i--)
+    // {
+    //     // sci0_txByte(iVal & 0x80 ? '1' : '0');
+    //     // iVal <<= 1;
+
+    //     if (iVal & (1 << i))
+    //     {
+    //         sci0_txStr("1");
+    //     }
+    //     else
+    //     {
+    //         sci0_txStr("0");
+    //     }
+    // }
 }
 int ToDigitVal(char digit)
 {
@@ -188,34 +200,34 @@ unsigned int HexArrayToUInt16(char *pArray)
 //     sci0_txStrXY(5, 11, "RESULT: ");
 //     sci0_ShowBin16(result);
 // }
+///////////////////////////////////////////////////////////////
+// void SCI0_BSend (unsigned char data)
+// {
+// 	// transmit buffer empty?
+// 	while (!(UCSR0A & (1<<UDRE0)))
+// 	;
 
-void SCI0_BSend (unsigned char data)
-{
-	// transmit buffer empty?
-	while (!(UCSR0A & (1<<UDRE0)))
-	;
+// 	// transmit complete must be cleared before send in polling mode
+// 	if (UCSR0A & (1<<TXC0))
+// 	UCSR0A = (1<<TXC0);
 
-	// transmit complete must be cleared before send in polling mode
-	if (UCSR0A & (1<<TXC0))
-	UCSR0A = (1<<TXC0);
+// 	// free to send data
+// 	UDR0 = data;
+// }
+// void SCI0_TxString (char * buff)
+// {
+//   while (*buff)
+//   {
+//     SCI0_BSend(*buff);
+//     ++buff;
+//   }
+// }
+// void SCI0_Tx16H (unsigned int uiVal, int tl)
+// {
+// 	char buff[7] = {0};
+// 	(void)sprintf(buff, "0x%4.4X", uiVal);
+// 	SCI0_TxString (buff);
 
-	// free to send data
-	UDR0 = data;
-}
-void SCI0_TxString (char * buff)
-{
-  while (*buff)
-  {
-    SCI0_BSend(*buff);
-    ++buff;
-  }
-}
-void SCI0_Tx16H (unsigned int uiVal, int tl)
-{
-	char buff[7] = {0};
-	(void)sprintf(buff, "0x%4.4X", uiVal);
-	SCI0_TxString (buff);
-
-	if (tl)
-		SCI0_TxString ("\r\n");
-}
+// 	if (tl)
+// 		SCI0_TxString ("\r\n");
+// }

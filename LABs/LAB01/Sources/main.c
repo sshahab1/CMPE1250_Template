@@ -76,42 +76,42 @@ unsigned int y;
   RTI_Init();
   sci0_Init();
   Clock_Set20MHZ();
-  // SCI0BD = 32;
-  // SCI0CR2 = 0b00001100;
 
+   // displaying name and description
+    // sci0_txStr("\x1b[1;1H Saamia Shahab");
+
+    // sci0_txStr("\x1b[2;1H Simple Binary Calculator");
+
+    // sci0_txStr("OP A: ");
+    // sci0_txStr(" OP B: ");
   /********************************************************************/
   // main program loop
   /********************************************************************/
   for (;;)
   {
-    // displaying name and description
-    // sci0_txStr("\x1b[1;1H Saamia Shahab");
+ 
 
-    // sci0_txStr("\x1b[2;1H Simple Binary Calculator");
-    sci0_txStr("\x1b[3;1H  ");
+    // // sci0_txByte(operand1);
+    // // sci0_txStr(" ( ");
+    // x=HexArrayToUInt16(&operand1);
+    // sprintf(arrayop1, " HEXNUM1 %d ", x);
+    // sci0_txStr(arrayop1);
+    // // sci0_txStr(" ) ");
 
-    sci0_txStr("OP A: ");
-    sci0_txByte(operand1);
-    sci0_txStr(" ( ");
-    x=HexArrayToUInt16(&operand1);
-    sprintf(arrayop1, " HEXNUM1 %d ", x);
-    sci0_txStr(arrayop1);
-    sci0_txStr(" ) ");
-
-    sci0_txStr(" OP B: ");
-    sci0_txByte(operand2);
-    sci0_txStr(" ( ");
-    y=HexArrayToUInt16(&operand2);
-    sprintf(arrayop2, " HEXNUM2 %d ", y);
-     sci0_txStr(arrayop2);
-    sci0_txStr(" ) ");
+ 
+    // // sci0_txByte(operand2);
+    // // sci0_txStr(" ( ");
+    // y=HexArrayToUInt16(&operand2);
+    // sprintf(arrayop2, " HEXNUM2 %d ", y);
+    //  sci0_txStr(arrayop2);
+    // sci0_txStr(" ) ");
 
     sci0_txStr("Binary OP A: ");
-    sci0_ShowBin16(HexArrayToUInt16(&operand1));
+    sci0_ShowBin16(04660);
   
 
     sci0_txStr("Binary OP B: ");
-    sci0_ShowBin16(HexArrayToUInt16(&operand2));
+    sci0_ShowBin16(43981);
 
    
 

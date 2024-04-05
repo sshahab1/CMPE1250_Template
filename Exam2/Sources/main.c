@@ -48,7 +48,7 @@ unsigned int count;
 void main(void)
 {
 int i;
- char str[79];
+ char str[70];
  char array[50];
 
   // Any main local variables must be declared here
@@ -108,7 +108,7 @@ int i;
 
     //sci0_txByte('.');
 
-  str[79] = '\0'; 
+  str[70] = '\0'; 
  
  if (SCI0SR1 & SCI0SR1_RDRF_MASK) // check if a character has been received
     {

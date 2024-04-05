@@ -117,7 +117,7 @@ int ToDigitVal (char digit);
 /////         my new functions       --------------------------------
 void positioning (int row, int col);
 // blocking send of a byte
-void SCI0_BSend (unsigned char data)
+void SCI0_BSend (unsigned char data);
 // blocking send of a string
 void SCI0_TxString (char * buff);
 // blocking send of a 16-bit HEX value as 0x0000
