@@ -20,11 +20,11 @@ void sci0_txStr(char const *straddr)
         sci0_txByte(*straddr);
 }
 
-void positioning (int row, int col)
-{
-    sprintf("\x1b[%d;%dH", row, col); //red
+// void positioning (int row, int col)
+// {
+//     sprintf("\x1b[%d;%dH", row, col); //red
 
-}
+// }
 
 ////LAB01////////////////////////////////
 // return 1 if RDRF set, otherwise return 0
@@ -41,17 +41,17 @@ int sci0_Peek(void)
 }
 // use an escape sequence to place the cursor at the specified position
 // this is the \x1B[y;xH form with formatted argument replacement (sprintf)
-void sci0_GotoXY(int iCol, int iRow)
-{
-    sprintf("\x1b[%d;%dH", iCol, iRow);
-}
+// void sci0_GotoXY(int iCol, int iRow)
+// {
+//     sprintf("\x1b[%d;%dH", iCol, iRow);
+// }
 // use sci0_GotoXY and sci0_txStr to place the string
-void sci0_txStrXY(int iCol, int iRow, char const *straddr) ////need help with this
-{
-    //sci0_GotoXY(iCol, iRow);
-    //sprintf(straddr, "\x1b[%d;%dH", iRow, iCol);
-    sci0_txStr(straddr);
-}
+// void sci0_txStrXY(int iCol, int iRow, char const *straddr) ////need help with this
+// {
+//     sci0_GotoXY(iCol, iRow);
+//     sprintf(straddr, "\x1b[%d;%dH", iRow, iCol);
+//     sci0_txStr(straddr);
+// }
 // use an escape sequence to clear the terminal
 void sci0_ClearScreen(void)
 {
@@ -60,77 +60,71 @@ void sci0_ClearScreen(void)
 void sci0_ShowBin16(unsigned int iVal)
 {
 
-    int binaryNum[100000];
-    char array[100000];
-    int i = 0;
-    int j=0;
-    while (iVal > 0) {
-        binaryNum[i] = iVal % 2;
-        iVal = iVal / 2;
-        i++;
+    char myString[20];
+    int i;
+    int remainder;
+    int result;
+    while (iVal > 0)
+    {
+        int remainder = iVal % 2;
+        iVal /= 2;
+        result = remainder.ToString() + result;
     }
 
-    // Print the binary number in reverse order
-    for ( j = i - 1; j >= 0; j--) {
-        array[j] = binaryNum[j] ;
-       
-    }
-      sci0_txStr(array);
-    // int i;
-    // for (i = 15; i >= 0; i--)
+    sprintf(myString, "%d", result);
+    sci0_txStr(myString);
+    // while (iVal > 0)
     // {
-    //     // sci0_txByte(iVal & 0x80 ? '1' : '0');
-    //     // iVal <<= 1;
-
-    //     if (iVal & (1 << i))
+    //     for (i = 0; i < 20; i++)
     //     {
-    //         sci0_txStr("1");
-    //     }
-    //     else
-    //     {
-    //         sci0_txStr("0");
+    //         remainder = iVal % 2;
+    //         iVal /= 2;
+    //         //myString[i] = remainder + myString[i];
+    //         result = remainder + result;
+    //         myString[i]=result.ToString();
     //     }
     // }
+    // sprintf(myString, "The value = %d", iVal);
 }
-int ToDigitVal(char digit)
-{
-    if (digit >= '0' && digit <= '9')
-    {
-        // converting '0'-'9' to numerical value (48-57 in ASCII)
-        return digit - '0';
-    }
-    else if (digit >= 'a' && digit <= 'f')
-    {
-        // converting 'a'-'f' to numerical value (97-102 in ASCII)
-        return digit - 'a' + 10;
-    }
-    else if (digit >= 'A' && digit <= 'F')
-    {
-        // converting 'A'-'F' to numerical value (65-70 in ASCII)
-        return digit - 'A' + 10;
-    }
-    else
-    {
-        // invalid character so returning 0
-        return 0;
-    }
-}
-unsigned int HexArrayToUInt16(char *pArray)
-{
-    unsigned int result = 0;
-    int i;
-    for (i = 0; i < 4; i++)
-    {
-        // multipling the current result by 16 and add the value of the current digit
-        result = (result << 4) + ToDigitVal(pArray[i]);
-    }
-    return result;
+// int ToDigitVal(char digit)
+// {
+//     if (digit >= '0' && digit <= '9')
+//     {
+//         // converting '0'-'9' to numerical value (48-57 in ASCII)
+//         return digit - '0';
+//     }
+//     else if (digit >= 'a' && digit <= 'f')
+//     {
+//         // converting 'a'-'f' to numerical value (97-102 in ASCII)
+//         return digit - 'a' + 10;
+//     }
+//     else if (digit >= 'A' && digit <= 'F')
+//     {
+//         // converting 'A'-'F' to numerical value (65-70 in ASCII)
+//         return digit - 'A' + 10;
+//     }
+//     else
+//     {
+//         // invalid character so returning 0
+//         return 0;
+//     }
+// }
+// unsigned int HexArrayToUInt16(char *pArray)
+// {
+//     unsigned int result = 0;
+//     int i;
+//     for (i = 0; i < 4; i++)
+//     {
+//         // multipling the current result by 16 and add the value of the current digit
+//         result = (result << 4) + ToDigitVal(pArray[i]);
+//     }
+//     return result;
 
-    // char hexArray[5] = "1A2F"; //example array representing hexadecimal value 0x1A2F
-    //     unsigned int value = HexArrayToUInt16(hexArray);
-    //     printf("Numerical value of hex array: %u\n", value);
-    //     return 0;
-}
+//     // char hexArray[5] = "1A2F"; //example array representing hexadecimal value 0x1A2F
+//     //     unsigned int value = HexArrayToUInt16(hexArray);
+//     //     printf("Numerical value of hex array: %u\n", value);
+//     //     return 0;
+// }
 
 // void DrawState(unsigned int iOPA, unsigned int iOPB, Operation op)
 // { //////////////fix this for performance
