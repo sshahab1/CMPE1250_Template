@@ -60,19 +60,32 @@ void sci0_ClearScreen(void)
 void sci0_ShowBin16(unsigned int iVal)
 {
 
-    char myString[20];
+    // char myString[20];
+    // int i;
+    // int remainder;
+    // char result[20]="";
+    // while (iVal > 0)
+    // {
+    //     // int remainder = iVal % 2;
+    //     // iVal /= 2;
+    //     // result = remainder.ToString() + result;
+    //     remainder = iVal % 2;
+    //     iVal /= 2;
+    //    sprintf(result, "%c%s", remainder + '0', result);
+    //    sci0_txStr(result);
+    // }
     int i;
-    int remainder;
-    int result;
-    while (iVal > 0)
+    // Loop through each bit starting from the most significant bit (bit 15) down to the least significant bit (bit 0)
+    for (i = 15; i >= 0; --i)
     {
-        int remainder = iVal % 2;
-        iVal /= 2;
-        result = remainder.ToString() + result;
+        // Extract the i-th bit from iVal using bitwise AND with a mask
+        int bit = (iVal >> i) & 1;
+        // Convert the bit to character and send it via sci0_txByte
+        sci0_txByte(bit + '0');
     }
 
-    sprintf(myString, "%d", result);
-    sci0_txStr(myString);
+    // sprintf(myString, "%d", result);
+
     // while (iVal > 0)
     // {
     //     for (i = 0; i < 20; i++)
@@ -86,45 +99,73 @@ void sci0_ShowBin16(unsigned int iVal)
     // }
     // sprintf(myString, "The value = %d", iVal);
 }
-// int ToDigitVal(char digit)
-// {
-//     if (digit >= '0' && digit <= '9')
-//     {
-//         // converting '0'-'9' to numerical value (48-57 in ASCII)
-//         return digit - '0';
-//     }
-//     else if (digit >= 'a' && digit <= 'f')
-//     {
-//         // converting 'a'-'f' to numerical value (97-102 in ASCII)
-//         return digit - 'a' + 10;
-//     }
-//     else if (digit >= 'A' && digit <= 'F')
-//     {
-//         // converting 'A'-'F' to numerical value (65-70 in ASCII)
-//         return digit - 'A' + 10;
-//     }
-//     else
-//     {
-//         // invalid character so returning 0
-//         return 0;
-//     }
-// }
-// unsigned int HexArrayToUInt16(char *pArray)
-// {
-//     unsigned int result = 0;
-//     int i;
-//     for (i = 0; i < 4; i++)
-//     {
-//         // multipling the current result by 16 and add the value of the current digit
-//         result = (result << 4) + ToDigitVal(pArray[i]);
-//     }
-//     return result;
+int ToDigitVal(char digit)
+{
+ 
+    if (digit >= '0' && digit <= '9')
+    {
+        // converting '0'-'9' to numerical value (48-57 in ASCII)
+        return digit - '0';
+    }
+     if (digit >= 'a' && digit <= 'f')
+    {
+        // converting 'a'-'f' to numerical value (97-102 in ASCII)
+        return digit - 'a' + 10;
+    }
+     if (digit >= 'A' && digit <= 'F')
+    {
+        // converting 'A'-'F' to numerical value (65-70 in ASCII)
+        return digit - 'A' + 10;
+    }
+    else
+    {
+        // invalid character so returning 0
+        return 0;
+    }
+}
+unsigned int HexArrayToUInt16(char *pArray)
+{
 
-//     // char hexArray[5] = "1A2F"; //example array representing hexadecimal value 0x1A2F
-//     //     unsigned int value = HexArrayToUInt16(hexArray);
-//     //     printf("Numerical value of hex array: %u\n", value);
-//     //     return 0;
-// }
+    //  unsigned int result = 0;
+    // int i;
+
+    // for (i = 0; i < 4; i++) {
+    //     int digitVal = ToDigitVal(pArray[i]);
+    //     if (digitVal == -1) {
+    //         // Invalid character found, return 0
+    //         return 0;
+    //     }
+    //     result = (result << 4) | digitVal;
+    // }
+
+    // return result;
+        unsigned int result = 0;
+        int i;
+    // Iterate over each character in the array
+    for (i = 0; i < 4; i++) {
+        // Convert the character to its numerical value
+        int digitVal = ToDigitVal(pArray[i]);
+        
+        // Shift the previous result to the left by 4 bits (equivalent to multiplying by 16)
+        // and add the new digit value
+        result = (result << 4) | digitVal;
+    }
+    
+    return result;
+
+
+}
+void NewHexMethod(unsigned int value, char *output)
+{
+  int i;
+    for (i = 0; i < 4; i++) {
+        // Extract each nibble (4 bits) of the value
+        int nibble = (value >> (i * 4)) & 0xF;
+        // Convert the nibble to its hexadecimal character representation
+        output[3 - i] = (nibble < 10) ? (nibble + '0') : (nibble - 10 + 'A');
+    }
+    output[4] = '\0'; // Null-terminate the string
+}
 
 // void DrawState(unsigned int iOPA, unsigned int iOPB, Operation op)
 // { //////////////fix this for performance

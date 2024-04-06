@@ -122,3 +122,4 @@ void SCI0_BSend (unsigned char data);
 void SCI0_TxString (char * buff);
 // blocking send of a 16-bit HEX value as 0x0000
 void SCI0_Tx16H (unsigned int uiVal, int tl);
+void NewHexMethod(unsigned int value, char *output);

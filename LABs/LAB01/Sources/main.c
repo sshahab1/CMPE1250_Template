@@ -60,14 +60,12 @@ char B = 0xABCD;
 /********************************************************************/
 void main(void)
 {
-unsigned int result;
-char arrayop1[5];
-char arrayop2[5];
-unsigned int x;
-unsigned int y;
 
-
-
+char arrayop1[20];
+char hexop1[20];
+  char hexArray[] = {'A', 'B', 'C', 'D'};
+  int i;
+    unsigned int result;
   // main entry point
   _DISABLE_COP();
   EnableInterrupts;
@@ -109,11 +107,35 @@ unsigned int y;
     //  sci0_txStr(arrayop2);
     // sci0_txStr(" ) ");
 
-    sci0_txStr("Binary OP A: ");
-    sci0_ShowBin16(04660);
+
+///////////////////////////WORKS/////////////////////////////////
     
-   
+    //show decimal to binary
+    // sci0_ShowBin16(43981);
+    
   
+    // sci0_txStr("  \x1b[6;1H ");
+
+    // sprintf(arrayop1, " HEXNUM: %d ",  ToDigitVal('A'));
+    // sci0_txStr(arrayop1);
+
+
+//hex to decimal
+  //     result = HexArrayToUInt16(hexArray);
+
+  // sprintf(hexop1,"\x1b[6;1H %05d", result); 
+
+  // sci0_txStr(hexop1);
+    
+
+
+////////////////////////////////////////////////////////////////
+
+ 
+
+
+
+  /////////////////////////////////
 
 
 
