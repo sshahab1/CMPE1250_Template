@@ -30,25 +30,30 @@ typedef enum
   OR
 } Operation;
 
-// char operand1[5];
-// char operand2[5];
-Operation operation = AND;
+Operation currentOperation = AND;
 
-char operand1[5] = 0x1234;
-char operand2[5] = 0xABCD;
-// Operation op = AND;
+unsigned char key;
 unsigned char character;
-
-char A = 0x1234;
-char B = 0xABCD;
 char arrayofstr[20];
 char escSeq[20];
-unsigned char character;
+
+int iXEditPos = 0;             // X position (0-3)
+int iYEditPos = 0;             // Y position (0-1)
+unsigned int operand[2] = {0}; // 2 operands
 /********************************************************************/
 // Local Prototypes
 // /********************************************************************/
 void sci0_GotoXY(int iCol, int iRow);
 void sci0_txStrXY(int Col, int Row, char const *straddr);
+void sci0_ShowBinAnd(unsigned int num1, unsigned int num2);
+void updateOperand(char key);
+
+int hexCharToDecimal(char hex);
+// Function to convert a hexadecimal string to its decimal equivalent
+unsigned int hexToDecimal(const char *hexString);
+// Function to convert a hexadecimal string to its binary equivalent
+unsigned int hexToBinary(const char *hexString);
+void sci0_ShowBinOr(unsigned int num1, unsigned int num2);
 
 /********************************************************************/
 // Global Variables
@@ -66,13 +71,31 @@ void main(void)
 
   char arrayop1[20];
   char hexop1[20];
-  char hexArray[] = {'A', 'B', 'C', 'D'};
+  char hexop2[20];
+  // char hexArray1[] = {'1', 'B', 'C', 'D'};
+  // char hexArray2[] = {'1', '2', '3', '4'};
+  char hexTest[] = {'0', '0', '0', '0'};
   int i;
   char storeChar[20];
-  unsigned int result;
-  // main entry point
+  // unsigned int result;
+  //  main entry point
   char str[20];
   char vowels;
+  ////newwww////
+  // char character;
+  // char hexOperandA[5] = "A2B4"; // Placeholder for operand A
+  // char hexOperandB[5] = "0000"; // Placeholder for operand B
+  int opA;
+  int opB;
+  unsigned int decimalA;
+  unsigned int decimalB;
+  unsigned int binaryA;
+  unsigned int binaryB;
+  unsigned int result;
+  unsigned int result2;
+  int sci0_current_x_position = 5;
+  int sci0_current_y_position = 14;
+  int currentOperand = 0; // Variable to store the index of the currently edited operand
 
   _DISABLE_COP();
   EnableInterrupts;
@@ -97,49 +120,151 @@ void main(void)
   for (;;)
   {
 
+    /********************************************************************/
+
+    /////////////////////////////////////////WORKS GET RID OF THE RECIEVE//////////////////////////////
     sci0_txStrXY(1, 1, "Saamia Shahab");
     sci0_txStrXY(2, 1, "Simple Binary Calculator");
 
     sci0_txStrXY(5, 5, "OP A:");
     sci0_txStrXY(5, 12, "0x");
-    sci0_txStrXY(5, 14, "1234");
-    sci0_txStrXY(5, 20, "(");
-    sci0_txStrXY(5, 21, "04660");
-    sci0_txStrXY(5, 26, ")");
+    // sci0_txStrXY(5, 14, *the value user enters*);
+   // sci0_txStrXY(5, 20, "(");
 
-    
-      if (SCI0SR1 & SCI0SR1_RDRF_MASK) // check if a character has been received
+while(1){
+
+
+ sci0_txStrXY(1, 1, "Saamia Shahab");
+    sci0_txStrXY(2, 1, "Simple Binary Calculator");
+
+    sci0_txStrXY(5, 5, "OP A:");
+    sci0_txStrXY(5, 12, "0x");
+
+    for (i = 0; i < 4; ++i)
+    {
+      // // Set cursor position to receive input
+      // sci0_GotoXY(5 + i, 14);
+
+
+     //
+       sci0_GotoXY(5+i, 16);
+      // Check if a character has been received
+      if (SCI0SR1 & SCI0SR1_RDRF_MASK)
       {
-        
-          character = SCI0DRL;
-          sci0_GotoXY(5, 14);
+
+        // A character has been received, read it from SCI0DRL
+        character = SCI0DRL;
+
+        // Process the received key
+        if ((character >= '0' && character <= '9') || (character >= 'a' && character <= 'f') || (character >= 'A' && character <= 'F'))
+        {
+          // Update the corresponding position in the hex array
+      
+          hexTest[i] = character;
+        }
       }
+       //sci0_GotoXY(5 + i, 14);
+     
+    }
+
   
-
-    sci0_txStrXY(6, 5, "OP B:");
-    sci0_txStrXY(6, 12, "0x");
-    sci0_txStrXY(6, 14, "ABCD");
-    sci0_txStrXY(6, 20, "(");
-    sci0_txStrXY(6, 21, "43981");
-    sci0_txStrXY(6, 26, ")");
-
-    sci0_txStrXY(9, 10, "&");
-
-   
-    sci0_txStrXY(8, 12, " ");
-       sci0_ShowBin16(43981);
-    sci0_txStrXY(9, 12, "01110000011100000");
-    sci0_txStrXY(10, 12, "-----------------");
-    sci0_txStrXY(11, 12, "01110000011100000");
-
-
-
-
-for(i=0;i<10;i++){
-  storeChar[i]=character;
+    // Convert the hex array to a 16-bit value and display it
+    result = HexArrayToUInt16(hexTest);
+    //Set cursor position to display the result
+   //sci0_GotoXY(5, 21);
+   sprintf(hexop1, "\x1b[5;30H %05d", result);
+    sci0_txStr(hexop1);
+sci0_txStr("   The value si    ");
+      sci0_GotoXY(5, 16);
+    sci0_txStr(hexTest);
 }
-    sci0_txStrXY(20, 20, storeChar);
+  //  sci0_txStr(hexTest);
+    // result = HexArrayToUInt16(hexTest);
 
+    // sprintf(hexop1, "\x1b[5;21H %05d", result);
+
+    // sci0_txStr(hexop1);
+
+    //sci0_txStrXY(5, 28, ")");
+
+    // sci0_txStrXY(6, 5, "OP B:");
+    // sci0_txStrXY(6, 12, "0x");
+    // sci0_txStrXY(6, 14, " ");
+    // sci0_txStrXY(6, 20, "(");
+    // result2 = HexArrayToUInt16(hexArray2);
+    // sprintf(hexop2, "\x1b[6;21H %05d", result2);
+    // sci0_txStr(hexop2);
+
+    // sci0_txStrXY(6, 28, ")");
+
+    // sci0_txStrXY(9, 10, "&");
+
+    // sci0_txStrXY(8, 12, " ");
+    // // sci0_ShowBin16(4660);
+    // sci0_ShowBin16(result);
+    // sci0_txStrXY(9, 12, " ");
+    // // sci0_ShowBin16(43981);
+    // sci0_ShowBin16(result2);
+    // sci0_txStrXY(10, 12, "-----------------");
+    // sci0_txStrXY(11, 12, " ");
+    // // sci0_ShowBinAnd(result, result2);
+    // sci0_ShowBinOr(result, result2);
+
+
+
+
+
+
+
+
+
+
+
+
+    // if (SCI0SR1 & SCI0SR1_RDRF_MASK) // check if a character has been received
+    // {
+
+    //   key = SCI0DRL;
+
+    //   if (key >= '0' && key <= '9')
+    //   {
+    //     operand[iYEditPos] &= ~(0xF << (iXEditPos * 4));      // Clear the nibble at iXEditPos
+    //     operand[iYEditPos] |= (key - '0') << (iXEditPos * 4); // Set the nibble at iXEditPos
+    //   }
+    //   else if (key >= 'a' && key <= 'f')
+    //   {
+    //     operand[iYEditPos] &= ~(0xF << (iXEditPos * 4));           // Clear the nibble at iXEditPos
+    //     operand[iYEditPos] |= (key - 'a' + 10) << (iXEditPos * 4); // Set the nibble at iXEditPos
+    //   }
+    //   else if (key >= 'A' && key <= 'F')
+    //   {
+    //     operand[iYEditPos] &= ~(0xF << (iXEditPos * 4));           // Clear the nibble at iXEditPos
+    //     operand[iYEditPos] |= (key - 'A' + 10) << (iXEditPos * 4); // Set the nibble at iXEditPos
+    //   }
+    //   else if (key == '&')
+    //   {
+    //     currentOperation = AND;
+    //   }
+    //   else if (key == '|')
+    //   {
+    //     currentOperation = OR;
+    //   }
+    //   else if (key == '\x09')
+    //   {
+    //     // Change the operand being edited (TAB)
+    //     iYEditPos = (iYEditPos + 1) % 2; // Toggle between 0 and 1
+    //   }
+
+    //   sci0_GotoXY(14 + iXEditPos, 5 + iYEditPos);
+
+    //   // for (int i = 0; i < 20; i++)
+    //   // {
+    //   //   str[i] = key;
+    //   // }
+    //   // sci0_txStrXY(20, 20, str);
+    // }
+
+    //////////////////////////////////WORKS THE TEMPELATE WORKS JUST GET RID OF THE RECIEVE////////////////////////////
     // // sci0_txByte(operand1);
     // // sci0_txStr(" ( ");
     // x=HexArrayToUInt16(&operand1);
@@ -231,6 +356,61 @@ void sci0_txStrXY(int Col, int Row, char const *straddr) ////need help with this
   sci0_GotoXY(Col, Row);
   // sprintf(straddr, "\x1b[%d;%dH", Col, Row);
   sci0_txStr(straddr);
+}
+void sci0_ShowBinAnd(unsigned int num1, unsigned int num2)
+{
+  unsigned int result = num1 & num2; // Perform bitwise AND operation
+  sci0_ShowBin16(result);
+}
+void sci0_ShowBinOr(unsigned int num1, unsigned int num2)
+{
+  unsigned int result = num1 | num2; // Perform bitwise OR operation
+  sci0_ShowBin16(result);
+}
+
+int hexCharToDecimal(char hex)
+{
+  if (hex >= '0' && hex <= '9')
+  {
+    return hex - '0';
+  }
+  else if (hex >= 'a' && hex <= 'f')
+  {
+    return hex - 'a' + 10;
+  }
+  else if (hex >= 'A' && hex <= 'F')
+  {
+    return hex - 'A' + 10;
+  }
+  else
+  {
+    return -1; // Invalid character
+  }
+}
+
+// Function to convert a hexadecimal string to its decimal equivalent
+unsigned int hexToDecimal(const char *hexString)
+{
+  unsigned int result = 0;
+  while (*hexString)
+  {
+    result = result * 16 + hexCharToDecimal(*hexString);
+    hexString++;
+  }
+  return result;
+}
+
+// Function to convert a hexadecimal string to its binary equivalent
+unsigned int hexToBinary(const char *hexString)
+{
+  unsigned int result = 0;
+  while (*hexString)
+  {
+    result = result << 4;
+    result |= hexCharToDecimal(*hexString);
+    hexString++;
+  }
+  return result;
 }
 /********************************************************************/
 // Interrupt Service Routines
