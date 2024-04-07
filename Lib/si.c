@@ -43,13 +43,13 @@ int sci0_Peek(void)
 // this is the \x1B[y;xH form with formatted argument replacement (sprintf)
 // void sci0_GotoXY(int iCol, int iRow)
 // {
-//     sprintf("\x1b[%d;%dH", iCol, iRow);
+//     sprintf(arrayofstr, "\x1b[%d;%dH" , iCol, iRow);
+//     sci0_txStr(arrayofstr);
 // }
-// use sci0_GotoXY and sci0_txStr to place the string
+//use sci0_GotoXY and sci0_txStr to place the string
 // void sci0_txStrXY(int iCol, int iRow, char const *straddr) ////need help with this
 // {
-//     sci0_GotoXY(iCol, iRow);
-//     sprintf(straddr, "\x1b[%d;%dH", iRow, iCol);
+//     sprintf(straddr, "\x1b[%d;%dH ", iRow, iCol);
 //     sci0_txStr(straddr);
 // }
 // use an escape sequence to clear the terminal
