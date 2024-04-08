@@ -75,12 +75,12 @@ void sci0_ShowBin16(unsigned int iVal)
     //    sci0_txStr(result);
     // }
     int i;
-    // Loop through each bit starting from the most significant bit (bit 15) down to the least significant bit (bit 0)
+    // loop through each bit starting from the most significant bit (bit 15) down to the least significant bit (bit 0)
     for (i = 15; i >= 0; --i)
     {
-        // Extract the i-th bit from iVal using bitwise AND with a mask
+        //extract the i-th bit from iVal using bitwise AND with a mask
         int bit = (iVal >> i) & 1;
-        // Convert the bit to character and send it via sci0_txByte
+        //convert the bit to character and send it via sci0_txByte
         sci0_txByte(bit + '0');
     }
 
@@ -143,10 +143,10 @@ unsigned int HexArrayToUInt16(char *pArray)
         int i;
     // Iterate over each character in the array
     for (i = 0; i < 4; i++) {
-        // Convert the character to its numerical value
+        //convert the character to its numerical value
         int digitVal = ToDigitVal(pArray[i]);
         
-        // Shift the previous result to the left by 4 bits (equivalent to multiplying by 16)
+        //shift the previous result to the left by 4 bits (equivalent to multiplying by 16)
         // and add the new digit value
         result = (result << 4) | digitVal;
     }
@@ -159,9 +159,9 @@ void NewHexMethod(unsigned int value, char *output)
 {
   int i;
     for (i = 0; i < 4; i++) {
-        // Extract each nibble (4 bits) of the value
+        //extract each nibble (4 bits) of the value
         int nibble = (value >> (i * 4)) & 0xF;
-        // Convert the nibble to its hexadecimal character representation
+        //convert the nibble to its hexadecimal character representation
         output[3 - i] = (nibble < 10) ? (nibble + '0') : (nibble - 10 + 'A');
     }
     output[4] = '\0'; // Null-terminate the string

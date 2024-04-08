@@ -134,31 +134,22 @@ void main(void)
 while(1){
 
 
- sci0_txStrXY(1, 1, "Saamia Shahab");
-    sci0_txStrXY(2, 1, "Simple Binary Calculator");
-
-    sci0_txStrXY(5, 5, "OP A:");
-    sci0_txStrXY(5, 12, "0x");
 
     for (i = 0; i < 4; ++i)
     {
-      // // Set cursor position to receive input
-      // sci0_GotoXY(5 + i, 14);
-
-
-     //
+      
        sci0_GotoXY(5+i, 16);
-      // Check if a character has been received
+      //check if a character has been received
       if (SCI0SR1 & SCI0SR1_RDRF_MASK)
       {
 
-        // A character has been received, read it from SCI0DRL
+        //a character has been received, read it from SCI0DRL
         character = SCI0DRL;
 
-        // Process the received key
+        //process the received key
         if ((character >= '0' && character <= '9') || (character >= 'a' && character <= 'f') || (character >= 'A' && character <= 'F'))
         {
-          // Update the corresponding position in the hex array
+          //update the corresponding position in the hex array
       
           hexTest[i] = character;
         }
@@ -168,9 +159,9 @@ while(1){
     }
 
   
-    // Convert the hex array to a 16-bit value and display it
+    //convert the hex array to a 16-bit value and display it
     result = HexArrayToUInt16(hexTest);
-    //Set cursor position to display the result
+    //eet cursor position to display the result
    //sci0_GotoXY(5, 21);
    sprintf(hexop1, "\x1b[5;30H %05d", result);
     sci0_txStr(hexop1);
@@ -221,40 +212,7 @@ sci0_txStr("   The value si    ");
 
 
 
-    // if (SCI0SR1 & SCI0SR1_RDRF_MASK) // check if a character has been received
-    // {
-
-    //   key = SCI0DRL;
-
-    //   if (key >= '0' && key <= '9')
-    //   {
-    //     operand[iYEditPos] &= ~(0xF << (iXEditPos * 4));      // Clear the nibble at iXEditPos
-    //     operand[iYEditPos] |= (key - '0') << (iXEditPos * 4); // Set the nibble at iXEditPos
-    //   }
-    //   else if (key >= 'a' && key <= 'f')
-    //   {
-    //     operand[iYEditPos] &= ~(0xF << (iXEditPos * 4));           // Clear the nibble at iXEditPos
-    //     operand[iYEditPos] |= (key - 'a' + 10) << (iXEditPos * 4); // Set the nibble at iXEditPos
-    //   }
-    //   else if (key >= 'A' && key <= 'F')
-    //   {
-    //     operand[iYEditPos] &= ~(0xF << (iXEditPos * 4));           // Clear the nibble at iXEditPos
-    //     operand[iYEditPos] |= (key - 'A' + 10) << (iXEditPos * 4); // Set the nibble at iXEditPos
-    //   }
-    //   else if (key == '&')
-    //   {
-    //     currentOperation = AND;
-    //   }
-    //   else if (key == '|')
-    //   {
-    //     currentOperation = OR;
-    //   }
-    //   else if (key == '\x09')
-    //   {
-    //     // Change the operand being edited (TAB)
-    //     iYEditPos = (iYEditPos + 1) % 2; // Toggle between 0 and 1
-    //   }
-
+   
     //   sci0_GotoXY(14 + iXEditPos, 5 + iYEditPos);
 
     //   // for (int i = 0; i < 20; i++)
