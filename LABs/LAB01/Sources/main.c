@@ -70,14 +70,14 @@ void main(void)
 {
 
   char arrayop1[20];
-  char hexop1[20];
-  char hexop2[20];
-  // char hexArray1[] = {'1', 'B', 'C', 'D'};
-  // char hexArray2[] = {'1', '2', '3', '4'};
-  char hexTest[] = {'0', '0', '0', '0'};
+  char hexbuffer1[20];
+  char hexbuffer2[20];
+   char hexArray1[] = {'1', 'B', 'C', 'D'};
+  char hexArray2[] = {'2', 'A', '3', 'C'};
+ 
   int i;
   char storeChar[20];
-  // unsigned int result;
+ 
   //  main entry point
   char str[20];
   char vowels;
@@ -128,78 +128,84 @@ void main(void)
 
     sci0_txStrXY(5, 5, "OP A:");
     sci0_txStrXY(5, 12, "0x");
-    // sci0_txStrXY(5, 14, *the value user enters*);
-   // sci0_txStrXY(5, 20, "(");
+    //sci0_GotoXY(5,15);
+   // sci0_txStr(hexArray1);
+    sci0_txStrXY(5, 14, "1BCD" );
+   sci0_txStrXY(5, 22, "(");
 
-while(1){
+
+    result = HexArrayToUInt16(hexArray1);
+
+    sprintf(hexbuffer1, "\x1b[5;22H %05d", result);
+
+    sci0_txStr(hexbuffer1);
+
+    sci0_txStrXY(5, 28, ")");
+
+    sci0_txStrXY(6, 5, "OP B:");
+    sci0_txStrXY(6, 12, "0x");
+    
+    sci0_txStrXY(6, 14, "2A3C");
+    //  sci0_GotoXY(5,15);
+    // sci0_txStr(hexArray2);
+    sci0_txStrXY(6, 22, "(");
+    result2 = HexArrayToUInt16(hexArray2);
+    sprintf(hexbuffer2, "\x1b[6;22H %05d", result2);
+    sci0_txStr(hexbuffer2);
+
+    sci0_txStrXY(6, 28, ")");
+
+    sci0_txStrXY(9, 10, "&");
+
+    sci0_txStrXY(8, 12, " ");
+    // sci0_ShowBin16(4660);
+    sci0_ShowBin16(result);
+    sci0_txStrXY(9, 12, " ");
+    // sci0_ShowBin16(43981);
+    sci0_ShowBin16(result2);
+    sci0_txStrXY(10, 12, "-----------------");
+    sci0_txStrXY(11, 12, " ");
+    // sci0_ShowBinAnd(result, result2);
+    sci0_ShowBinOr(result, result2);
+// while(1){
 
 
 
-    for (i = 0; i < 4; ++i)
-    {
+//     for (i = 0; i < 4; ++i)
+//     {
       
-       sci0_GotoXY(5+i, 16);
-      //check if a character has been received
-      if (SCI0SR1 & SCI0SR1_RDRF_MASK)
-      {
+//        sci0_GotoXY(5+i, 16);
+//       //check if a character has been received
+//       if (SCI0SR1 & SCI0SR1_RDRF_MASK)
+//       {
 
-        //a character has been received, read it from SCI0DRL
-        character = SCI0DRL;
+//         //a character has been received, read it from SCI0DRL
+//         character = SCI0DRL;
 
-        //process the received key
-        if ((character >= '0' && character <= '9') || (character >= 'a' && character <= 'f') || (character >= 'A' && character <= 'F'))
-        {
-          //update the corresponding position in the hex array
+//         //process the received key
+//         if ((character >= '0' && character <= '9') || (character >= 'a' && character <= 'f') || (character >= 'A' && character <= 'F'))
+//         {
+//           //update the corresponding position in the hex array
       
-          hexTest[i] = character;
-        }
-      }
-       //sci0_GotoXY(5 + i, 14);
+//           hexTest[i] = character;
+//         }
+//       }
+//       
      
-    }
+//     }
 
   
-    //convert the hex array to a 16-bit value and display it
-    result = HexArrayToUInt16(hexTest);
-    //eet cursor position to display the result
-   //sci0_GotoXY(5, 21);
-   sprintf(hexop1, "\x1b[5;30H %05d", result);
-    sci0_txStr(hexop1);
-sci0_txStr("   The value si    ");
-      sci0_GotoXY(5, 16);
-    sci0_txStr(hexTest);
-}
-  //  sci0_txStr(hexTest);
-    // result = HexArrayToUInt16(hexTest);
+  //   //convert the hex array to a 16-bit value and display it
+  //   result = HexArrayToUInt16(hexTest);
+  //   //eet cursor position to display the result
+  //  //sci0_GotoXY(5, 21);
+  //  sprintf(hexop1, "\x1b[5;30H %05d", result);
+  //   sci0_txStr(hexop1);
 
-    // sprintf(hexop1, "\x1b[5;21H %05d", result);
+  //     sci0_GotoXY(5, 16);
+  //   sci0_txStr(hexTest);
 
-    // sci0_txStr(hexop1);
-
-    //sci0_txStrXY(5, 28, ")");
-
-    // sci0_txStrXY(6, 5, "OP B:");
-    // sci0_txStrXY(6, 12, "0x");
-    // sci0_txStrXY(6, 14, " ");
-    // sci0_txStrXY(6, 20, "(");
-    // result2 = HexArrayToUInt16(hexArray2);
-    // sprintf(hexop2, "\x1b[6;21H %05d", result2);
-    // sci0_txStr(hexop2);
-
-    // sci0_txStrXY(6, 28, ")");
-
-    // sci0_txStrXY(9, 10, "&");
-
-    // sci0_txStrXY(8, 12, " ");
-    // // sci0_ShowBin16(4660);
-    // sci0_ShowBin16(result);
-    // sci0_txStrXY(9, 12, " ");
-    // // sci0_ShowBin16(43981);
-    // sci0_ShowBin16(result2);
-    // sci0_txStrXY(10, 12, "-----------------");
-    // sci0_txStrXY(11, 12, " ");
-    // // sci0_ShowBinAnd(result, result2);
-    // sci0_ShowBinOr(result, result2);
+   
 
 
 
