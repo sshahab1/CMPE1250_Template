@@ -167,6 +167,7 @@ void main(void)
     sci0_txStrXY(11, 12, " ");
     // sci0_ShowBinAnd(result, result2);
     sci0_ShowBinOr(result, result2);
+
 // while(1){
 
 
@@ -190,20 +191,20 @@ void main(void)
 //           hexTest[i] = character;
 //         }
 //       }
-//       
+      
      
 //     }
 
   
-  //   //convert the hex array to a 16-bit value and display it
-  //   result = HexArrayToUInt16(hexTest);
-  //   //eet cursor position to display the result
-  //  //sci0_GotoXY(5, 21);
-  //  sprintf(hexop1, "\x1b[5;30H %05d", result);
-  //   sci0_txStr(hexop1);
+    //convert the hex array to a 16-bit value and display it
+    result = HexArrayToUInt16(hexTest);
+    //eet cursor position to display the result
+   //sci0_GotoXY(5, 21);
+   sprintf(hexop1, "\x1b[5;30H %05d", result);
+    sci0_txStr(hexop1);
 
-  //     sci0_GotoXY(5, 16);
-  //   sci0_txStr(hexTest);
+      sci0_GotoXY(5, 16);
+    sci0_txByte(hexTest);
 
    
 
