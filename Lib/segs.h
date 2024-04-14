@@ -126,7 +126,7 @@ void Segs_16D (unsigned int, Segs_LineOption);
 
 // show the 8-bit value starting on the digit as addr (0-6)
 /* Params: (addr, value) */
-void Segs_8H (unsigned char, unsigned char);
+void Segs_8H(unsigned char, unsigned char);
 
 // say Err on the appropriate line
 /* Params: (line) */
