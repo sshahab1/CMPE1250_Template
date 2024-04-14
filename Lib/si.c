@@ -4,7 +4,7 @@
 
 void sci0_Init(void)
 {
-    SCI0BD = 130;
+    SCI0BD = 32;
     SCI0CR2 = 0b00001100;
 }
 void sci0_txByte(unsigned char data)

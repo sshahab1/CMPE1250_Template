@@ -70,14 +70,14 @@ void main(void)
 {
 
   char arrayop1[20];
-  char hexop1[20];
-  char hexop2[20];
-  // char hexArray1[] = {'1', 'B', 'C', 'D'};
-  // char hexArray2[] = {'1', '2', '3', '4'};
-  char hexTest[] = {'0', '0', '0', '0'};
+  char hexbuffer1[20];
+  char hexbuffer2[20];
+   char hexArray1[] = {'1', 'B', 'C', 'D'};
+  char hexArray2[] = {'2', 'A', '3', 'C'};
+ 
   int i;
   char storeChar[20];
-  // unsigned int result;
+ 
   //  main entry point
   char str[20];
   char vowels;
@@ -129,51 +129,54 @@ void main(void)
     sci0_txStrXY(5, 5, "OP A:");
     sci0_txStrXY(5, 12, "0x");
     // sci0_txStrXY(5, 14, *the value user enters*);
-    // sci0_txStrXY(5, 20, "(");
+   // sci0_txStrXY(5, 20, "(");
 
-    while (1)
+while(1){
+
+
+
+    for (i = 0; i < 4; ++i)
     {
-
-      for (i = 0; i < 4; ++i)
+      
+       sci0_GotoXY(5+i, 16);
+      //check if a character has been received
+      if (SCI0SR1 & SCI0SR1_RDRF_MASK)
       {
 
-        sci0_GotoXY(5 + i, 16);
-        // check if a character has been received
-        if (SCI0SR1 & SCI0SR1_RDRF_MASK)
+        //a character has been received, read it from SCI0DRL
+        character = SCI0DRL;
+
+        //process the received key
+        if ((character >= '0' && character <= '9') || (character >= 'a' && character <= 'f') || (character >= 'A' && character <= 'F'))
         {
-
-          // a character has been received, read it from SCI0DRL
-          character = SCI0DRL;
-
-          // process the received key
-          if ((character >= '0' && character <= '9') || (character >= 'a' && character <= 'f') || (character >= 'A' && character <= 'F'))
-          {
-            // update the corresponding position in the hex array
-
-            hexTest[i] = character;
-          }
+          //update the corresponding position in the hex array
+      
+          hexTest[i] = character;
         }
-        // sci0_GotoXY(5 + i, 14);
       }
-
-      // convert the hex array to a 16-bit value and display it
-      result = HexArrayToUInt16(hexTest);
-      // eet cursor position to display the result
-      // sci0_GotoXY(5, 21);
-      sprintf(hexop1, "\x1b[5;30H %05d", result);
-      sci0_txStr(hexop1);
-      sci0_txStr("   The value si    ");
-      sci0_GotoXY(5, 16);
-      sci0_txStr(hexTest);
+       //sci0_GotoXY(5 + i, 14);
+     
     }
-    //  sci0_txStr(hexTest);
+
+  
+    //convert the hex array to a 16-bit value and display it
+    result = HexArrayToUInt16(hexTest);
+    //eet cursor position to display the result
+   //sci0_GotoXY(5, 21);
+   sprintf(hexop1, "\x1b[5;30H %05d", result);
+    sci0_txStr(hexop1);
+sci0_txStr("   The value si    ");
+      sci0_GotoXY(5, 16);
+    sci0_txStr(hexTest);
+}
+  //  sci0_txStr(hexTest);
     // result = HexArrayToUInt16(hexTest);
 
     // sprintf(hexop1, "\x1b[5;21H %05d", result);
 
     // sci0_txStr(hexop1);
 
-    // sci0_txStrXY(5, 28, ")");
+    //sci0_txStrXY(5, 28, ")");
 
     // sci0_txStrXY(6, 5, "OP B:");
     // sci0_txStrXY(6, 12, "0x");
@@ -198,6 +201,18 @@ void main(void)
     // // sci0_ShowBinAnd(result, result2);
     // sci0_ShowBinOr(result, result2);
 
+
+
+
+
+
+
+
+
+
+
+
+   
     //   sci0_GotoXY(14 + iXEditPos, 5 + iYEditPos);
 
     //   // for (int i = 0; i < 20; i++)
