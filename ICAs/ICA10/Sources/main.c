@@ -32,7 +32,15 @@
 /********************************************************************/
 // Global Variables
 /********************************************************************/
-
+unsigned char caret[] =
+    {
+        0b11000000, // a
+        0b10100000, // b
+        0b10010000, // c
+        0b10000001, // d
+        0b10001000, // e
+        0b10000010  // f
+};
 /********************************************************************/
 // Constants
 /********************************************************************/
@@ -43,10 +51,14 @@
 void main(void)
 {
 
-  int centerBtnPushed;
-  int  animatedcaret;
+  int centerBtnPushed = 0;
+  int animatedcaret = 0;
   int i = 0;
-  char caret[100];
+  // int caret[24];
+  int loopCount = 0;
+  int caretPosn = 0;
+  int caretMovedTotal = 0;
+
   // Initialize the processor, device, and peripherals
   // main entry point
   _DISABLE_COP();
@@ -61,13 +73,13 @@ void main(void)
   Clock_Set20MHZ();
   Segs_Init();
 
-      // Segs_Clear();
-    Segs_8H(7, '4');
-    Segs_Custom(1, 0b01001010);
-    Segs_Custom(2, 0b11110000);
-    Segs_Custom(5, 0b10001011);
-    Segs_Custom(6, 0b10110001);
-    Segs_Normal(4, '3', Segs_DP_OFF);
+  // Segs_Clear();
+  Segs_8H(7, 0b11100100);
+  Segs_Custom(1, 0b01001010);
+  Segs_Custom(2, 0b11110000);
+  Segs_Custom(5, 0b10001011);
+  Segs_Custom(6, 0b10110001);
+  Segs_Normal(4, '3', Segs_DP_OFF);
 
   /********************************************************************/
   // main program loop
@@ -75,7 +87,7 @@ void main(void)
   for (;;)
   {
 
-    Delay(100);
+ 
 
     if (SWL_Pushed(SWL_CTR))
     {
@@ -84,13 +96,43 @@ void main(void)
       Segs_16H(i, 1);
       i++;
     }
-  if(centerBtnPushed)
-  {
-     animatedcaret=(animatedcaret+1) % 6;
-     Segs_Custom(animatedcaret, 0b10000000|caret[animatedcaret]);
-     
+    if (centerBtnPushed)
+    {
+      animatedcaret = (animatedcaret + 1) % 6;
+      Segs_Custom(caretPosn, caret[animatedcaret]);
+      if (SWL_Pushed(SWL_RIGHT))
+      {
+        loopCount++;
+        if (loopCount >= 10)
+        {
+          Segs_ClearLine(Segs_LineTop);
+          caretPosn = (caretPosn + 1) % 4;
+          caretMovedTotal++;
 
-  }
+          loopCount = 0;
+        }
+      }
+
+    else  if (SWL_Pushed(SWL_LEFT))
+      {
+
+        loopCount++;
+        if(loopCount >= 10)
+        {
+          Segs_ClearLine(Segs_LineTop);
+          caretPosn--;
+          caretPosn = (caretPosn % 4 + 4) % 4;
+          caretMovedTotal++;
+
+          loopCount = 0;
+        }
+      }
+
+
+     //Segs_16H(caretMovedTotal, 1); //display the count
+
+    }
+   Delay(100);
     // Segs_8H(7, 0xF,  Segs_DP_OFF );
     //  Segs_Normal(3,12, Segs_DP_ON);
     //  Segs_Normal(6, 0x0F, Segs_DP_OFF);
