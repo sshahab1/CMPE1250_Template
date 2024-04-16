@@ -32,15 +32,17 @@
 /********************************************************************/
 // Global Variables
 /********************************************************************/
-unsigned char caret[] =
-    {
-        0b11000000, // a
-        0b10100000, // b
-        0b10010000, // c
-        0b10000001, // d
-        0b10001000, // e
-        0b10000010  // f
-};
+unsigned int counter = 0;
+unsigned int loopCount = 0;
+unsigned int i = 4;
+// unsigned int currentStateUp=0;
+// unsigned int currentStateDown=0;
+unsigned int oldStateUp= 0;
+unsigned int oldStateDown= 0;
+
+unsigned int pressedUp = 0;
+unsigned int pressedDown = 0;
+
 /********************************************************************/
 // Constants
 /********************************************************************/
@@ -50,14 +52,6 @@ unsigned char caret[] =
 /********************************************************************/
 void main(void)
 {
-
-  int centerBtnPushed = 0;
-  int animatedcaret = 0;
-  int i = 0;
-  // int caret[24];
-  int loopCount = 0;
-  int caretPosn = 0;
-  int caretMovedTotal = 0;
 
   // Initialize the processor, device, and peripherals
   // main entry point
@@ -73,72 +67,88 @@ void main(void)
   Clock_Set20MHZ();
   Segs_Init();
 
-  // Segs_Clear();
-  Segs_8H(7, 0b11100100);
-  Segs_Custom(1, 0b01001010);
-  Segs_Custom(2, 0b11110000);
-  Segs_Custom(5, 0b10001011);
-  Segs_Custom(6, 0b10110001);
-  Segs_Normal(4, '3', Segs_DP_OFF);
+  // while(1)
+  // {
+  //     Segs_Custom(4, 0b00000000);
+  //     Delay(200);
+  //     Segs_Custom(5, 0b00000000);
+  //     Delay(200);
+  //     Segs_Custom(6, 0b00000000);
+  //     Delay(200);
+  //     Segs_Custom(7, 0b00000000);
+  //     Delay(200);
+  //     Segs_Custom(7, 0b10000000);
+  //     Segs_Custom(6, 0b10000000);
+  //     Segs_Custom(5, 0b10000000);
+  //     Segs_Custom(4, 0b10000000);
+  //     Delay(200);
 
+  // }
   /********************************************************************/
   // main program loop
   /********************************************************************/
   for (;;)
   {
 
- 
-   Delay(100);
+    SWL_TOG(SWL_RED);
 
-    if (SWL_Pushed(SWL_CTR))
+    // Delay(1000);
+    // Segs_16H(i, 1);
+    // SWL_TOG(SWL_GREEN);
+    // i++;
+
+    // if (SWL_Pushed(SWL_CTR))
+    // {
+    //   counter = 0;
+    //   Segs_16D(0, 0);
+    // }
+    if (loopCount % 4 == 0)
     {
-      centerBtnPushed = 1;
-      Segs_16H(0xFFFF - i, 0);
-      Segs_16H(i, 1);
-      i++;
-    }
-    if (centerBtnPushed)
-    {
-      animatedcaret = (animatedcaret + 1) % 6;
-      Segs_Custom(caretPosn, caret[animatedcaret]);
-      if (SWL_Pushed(SWL_RIGHT))
+
+      if (i < 8)
       {
-        loopCount++;
-        if (loopCount >= 10)
-        {
-          Segs_ClearLine(Segs_LineTop);
-          caretPosn = (caretPosn + 1) % 4;
-          caretMovedTotal++;
+        Segs_Custom(i, 0b00000000);
+        i++;
+      }
+      else
+      {
+        Segs_ClearLine(Segs_LineBottom);
+        i = 4;
+      }
+    }
+    if (loopCount == 20)
+    {
 
-          loopCount = 0;
-        }
+      int currentStateUp = SWL_Pushed(SWL_UP);
+      int currentStateDown = SWL_Pushed(SWL_DOWN);
+      if ((currentStateUp != oldStateUp) & currentStateUp)
+      {
+        pressedUp = 1;
+        pressedDown = 0;
+      }
+      if ((currentStateDown != oldStateDown) & currentStateDown)
+      {
+        pressedUp = 0;
+        pressedDown = 1;
+      }
+      if (pressedUp > 0)
+      {
+        Segs_16H(counter++, Segs_LineTop);
+      }
+      else if (pressedDown > 0)
+      {
+        Segs_16D(counter++, Segs_LineTop);
       }
 
-    else  if (SWL_Pushed(SWL_LEFT))
-      {
-
-        loopCount++;
-        if(loopCount >= 10)
-        {
-          Segs_ClearLine(Segs_LineTop);
-          caretPosn--;
-          caretPosn = (caretPosn % 4 + 4) % 4;
-          caretMovedTotal++;
-
-          loopCount = 0;
-        }
-      }
-
-
-     //Segs_16H(caretMovedTotal, 1); //display the count
-
+      oldStateDown = currentStateDown;
+      oldStateUp = currentStateUp;
+      
+      SWL_TOG(SWL_GREEN);
+      loopCount = 0;
     }
-    // Segs_8H(7, 0xF,  Segs_DP_OFF );
-    //  Segs_Normal(3,12, Segs_DP_ON);
-    //  Segs_Normal(6, 0x0F, Segs_DP_OFF);
-    //  Segs_Custom(4, 0b10100101);
-    //  Segs_Custom(6, 0b00000000);
-    //  Segs_Custom(3, 0b11100110);
+
+    Delay(50);
+    loopCount++;
   }
 }
 /********************************************************************/
