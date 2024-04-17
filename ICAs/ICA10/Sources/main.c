@@ -93,23 +93,22 @@ void main(void)
     if (SWL_Pushed(SWL_CTR))
     {
       centerBtnPushed = 1;
-      Segs_16H(0xFFFF - i, Segs_LineBottom);
-      Segs_16H(i, Segs_LineTop);
+      Segs_16H(0xFFFF - i, Segs_LineBottom); //with FF in the tbotton line
+      Segs_16H(i, Segs_LineTop); //displaying in hex at the top line 
       i++;
     }
     if (centerBtnPushed)
     {
-      animatedcaret = (animatedcaret + 1) % 6;
-      Segs_Custom(caretPosn, caret[animatedcaret]);
+      animatedcaret = (animatedcaret + 1) % 6; //top rightside down leftside the '8'
+      Segs_Custom(caretPosn, caret[animatedcaret]); //going through a b c d e f the '8' caret = array 
       if (SWL_Pushed(SWL_RIGHT))
       {
         loopCount++;
         if (loopCount >= 10)
         {
           Segs_ClearLine(Segs_LineTop);
-          caretPosn = (caretPosn + 1) % 4;
+          caretPosn = (caretPosn + 1) % 4; // increment here and stuck in the top 'the 4 positions on the segs at the top line'
           caretMovedTotal++;
-
           loopCount = 0;
         }
       }
@@ -124,13 +123,12 @@ void main(void)
           caretPosn--;
           caretPosn = (caretPosn % 4 + 4) % 4;
           caretMovedTotal++;
-
           loopCount = 0;
         }
       }
 
 
-     //Segs_16H(caretMovedTotal, Segs_LineBottom); //display the count
+     Segs_16H(caretMovedTotal, Segs_LineBottom); //display the count
 
     }
     // Segs_8H(7, 0xF,  Segs_DP_OFF );

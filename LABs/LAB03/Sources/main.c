@@ -43,7 +43,7 @@
 /********************************************************************/
 void main(void)
 {
-
+int i=0;
   // Initialize the processor, device, and peripherals
   // main entry point
   _DISABLE_COP();
@@ -63,7 +63,22 @@ void main(void)
   /********************************************************************/
   for (;;)
   {
+     Delay(100);
+     
+     Segs_Normal(4, '3', Segs_DP_OFF);
+
+     if(i<9)
+     {
+        if(SWL_Pushed(SWL_UP))
+        {
+          Segs_16D(i, Segs_LineTop);
+          i++;
+        }
+      
+     }
     
+    
+
   }
 }
 /********************************************************************/
