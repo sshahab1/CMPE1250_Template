@@ -162,8 +162,8 @@ unsigned int HexToBCD16(unsigned int input)
 
     value +=(input%10) * 0x1;
     value +=((input/10) % 10) * 0x10;
-    value +=((input/100)%10) * 0x100;
-    value +=((input/1000)%10) * 0x1000;
+    value +=((input/100) % 10) * 0x100;
+    value +=((input/1000) % 10) * 0x1000;
 
     return value;
 

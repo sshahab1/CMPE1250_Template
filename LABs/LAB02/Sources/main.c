@@ -92,6 +92,7 @@ void main(void)
 
     SWL_TOG(SWL_RED);
 
+    
     // Delay(1000);
     // Segs_16H(i, 1);
     // SWL_TOG(SWL_GREEN);
@@ -116,11 +117,14 @@ void main(void)
         i = 4;
       }
     }
+
+    int currentStateUp = SWL_Pushed(SWL_UP);
+      int currentStateDown = SWL_Pushed(SWL_DOWN);
+      
     if (loopCount == 20)
     {
 
-      int currentStateUp = SWL_Pushed(SWL_UP);
-      int currentStateDown = SWL_Pushed(SWL_DOWN);
+      
       if ((currentStateUp != oldStateUp) & currentStateUp)
       {
         pressedUp = 1;
