@@ -93,8 +93,8 @@ void main(void)
     if (SWL_Pushed(SWL_CTR))
     {
       centerBtnPushed = 1;
-      Segs_16H(0xFFFF - i, 0);
-      Segs_16H(i, 1);
+      Segs_16H(0xFFFF - i, Segs_LineBottom);
+      Segs_16H(i, Segs_LineTop);
       i++;
     }
     if (centerBtnPushed)
@@ -114,7 +114,7 @@ void main(void)
         }
       }
 
-    else  if (SWL_Pushed(SWL_LEFT))
+    else if (SWL_Pushed(SWL_LEFT))
       {
 
         loopCount++;
@@ -130,7 +130,7 @@ void main(void)
       }
 
 
-     //Segs_16H(caretMovedTotal, 1); //display the count
+     //Segs_16H(caretMovedTotal, Segs_LineBottom); //display the count
 
     }
     // Segs_8H(7, 0xF,  Segs_DP_OFF );
