@@ -55,7 +55,7 @@ unsigned int loopCount = 0;
 /********************************************************************/
 void main(void)
 {
- // int count = 0;
+ int count = 0;
   int j;
   // Initialize the processor, device, and peripherals
   // main entry point
@@ -100,10 +100,10 @@ void main(void)
             count = 0;
           }
 
-          for( j = 0; j < 4;j++)
-          {
-              array[j]=count;
-          }
+          // for( j = 0; j < 4;j++)
+          // {
+          //     array[j]=count;
+          // }
         //oldStateUp = curStateUp;
       }
     }
