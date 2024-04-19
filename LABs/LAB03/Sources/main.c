@@ -91,69 +91,43 @@ void main(void)
 
     //  }
 /////////////////////////////////////////////////////////WORKS KINDOF
-    // Segs_16DDP(count, i);
-    // {
-    //   if (SWL_Pushed(SWL_UP))
-    //   {
-    //       if (++count > 9)
-    //       {
-    //         count = 0;
-    //       }
+    Segs_16DDP(count, i);
+    {
+      if (SWL_Pushed(SWL_UP))
+      {
+          if (++count > 9)
+          {
+            count = 0;
+          }
 
-    //       for( j = 0; j < 4;j++)
-    //       {
-    //           array[j]=count;
-    //       }
-    //     //oldStateUp = curStateUp;
-    //   }
-    // }
-    //  if (SWL_Pushed(SWL_RIGHT))
-    // {
-    //   if (loopCount % 4 == 0)
-    //   {
+          for( j = 0; j < 4;j++)
+          {
+              array[j]=count;
+          }
+        //oldStateUp = curStateUp;
+      }
+    }
+     if (SWL_Pushed(SWL_RIGHT))
+    {
+      if (loopCount % 4 == 0)
+      {
         
-    //     if (i < 4)
-    //     {
-    //        Segs_ClearDigit(i-1);
-    //       Segs_Custom(i, 0b00000000);
-    //       i++;
-    //     }
-    //     else
-    //     {
-    //       Segs_ClearLine(Segs_LineTop);
-    //       i = 0;
-    //     }
-    //   }
-    // }
+        if (i < 4)
+        {
+           Segs_ClearDigit(i-1);
+          Segs_Custom(i, 0b00000000);
+          i++;
+        }
+        else
+        {
+          Segs_ClearLine(Segs_LineTop);
+          i = 0;
+        }
+      }
+    }
 
     ///////////////////////////////////////////////////////////////////////////
-    // Simulated SWL_Pushed calls
-        // int SWL_Pushed(SWL_UP)= 0; // Simulated condition
-        // int SWL_Pushed(SWL_RIGHT) = 0; // Simulated condition
-
-        // if (SWL_Pushed(SWL_UP) || SWL_Pushed(SWL_RIGHT)) {
-            if (SWL_Pushed(SWL_UP)) {
-                // Increase count at the current digit and wrap around if necessary
-                counts[i % MAX_DIGITS] = (counts[i % MAX_DIGITS] + 1) % 10;
-            }
-
-            if (SWL_Pushed(SWL_RIGHT)) {
-                if (loopCount % 4 == 0) {
-                    if (i < MAX_DIGITS) {
-                        Segs_ClearDigit(i - 1);
-                        Segs_Custom(i, 0b00000000);
-                        i++;
-                    } else {
-                        Segs_ClearLine(Segs_LineTop);
-                        i = 0;
-                    }
-                }
-
-                // Update display with the counts array
-                for (j = 0; j < MAX_DIGITS; j++) {
-                    Segs_16DDP(counts[j], j);
-                }
-            }
+    
         
    // Segs_16DDP(count, 0);
     //   if (SWL_Pushed(SWL_UP))
