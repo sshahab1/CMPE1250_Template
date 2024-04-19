@@ -67,6 +67,9 @@ void Segs_Clear(void)
         Segs_Custom(i, 0b10000000);
     }
 }
+void Segs_ClearDigit(unsigned char cToClear){
+    Segs_Custom(cToClear, 0b10000000);
+}
 void Segs_ClearLine(Segs_LineOption line)
 {
     int i;
@@ -155,6 +158,50 @@ void Segs_16D(unsigned int input, Segs_LineOption line)
     //     Segs_Normal(i + offset, (unsigned char)cDisplay, Segs_DP_OFF);
     // }
 }
+void Segs_16DDecimal(unsigned int input, Segs_LineOption line, Segs_DPOption dp)
+{
+    unsigned char index = 0;
+    unsigned int Value;
+
+
+
+    if (dp)
+    {
+        Value &= ~(0x80);
+    }
+    else
+    {
+        Value |= 0x80;
+    }
+  
+    // Segs_MH;
+    // Segs_WLATCH;
+    // PORTB = Value;
+    // Segs_ML;
+    // Segs_WLATCH;
+    if(line == Segs_LineTop)
+    {
+        index=0;
+    }
+     else  if (line == Segs_LineBottom)
+    {
+        index = 4;
+    }
+    if(input < 1000)
+    {
+        Value = HexToBCD16(input);
+        Segs_8H(index, Value>>8);
+        Segs_8H(index+2, Value&0xFF);
+    }
+    else{
+        return;
+    }
+    // for(i = 0;i < 4; i++)
+    // {
+    //     cDisplay = (Value >> (unsigned char)((3 - i) * 4)) & 0xF;
+    //     Segs_Normal(i + offset, (unsigned char)cDisplay, Segs_DP_OFF);
+    // }
+}
 unsigned int HexToBCD16(unsigned int input)
 {
     unsigned int value = 0;
@@ -167,4 +214,29 @@ unsigned int HexToBCD16(unsigned int input)
 
     return value;
 
+}
+void Segs_16DDP(unsigned int input, unsigned int dpLocation){
+    unsigned char index = 0;
+    unsigned int Value;
+
+    if (dpLocation % 4 == dpLocation)
+    {
+        index = dpLocation; // go at location
+    }
+    else
+    {
+        index = 0; // start at location 0
+    }
+    if (input < 10000)
+    {
+
+        Value = HexToBCD16(input);
+
+        Segs_8H(index, Value >> 8);
+        Segs_8H(index + 2, Value & 0xFF);
+    }
+    else
+    {
+        return;
+    }
 }

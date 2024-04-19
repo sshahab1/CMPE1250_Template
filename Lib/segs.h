@@ -111,7 +111,7 @@ void Segs_ClearDigit(unsigned char);
 
 // clear the entire display
 void Segs_Clear(void);
-
+void Segs_ClearDigit(unsigned char cToClear);
 // clear display  upper or lower line
 /* Params: (line) */
 void Segs_ClearLine(Segs_LineOption);
@@ -123,7 +123,7 @@ void Segs_16H (unsigned int, Segs_LineOption);
 // show a decimal value on the first or second line of the 7-segs
 /* Params: (value, line) */
 void Segs_16D(unsigned int, Segs_LineOption);
-
+void Segs_16DDecimal(unsigned int, Segs_LineOption, Segs_DPOption);
 
 // show the 8-bit value starting on the digit as addr (0-6)
 /* Params: (addr, value) */
@@ -134,4 +134,4 @@ void Segs_8H(unsigned char, unsigned char);
 void Segs_SayErr (Segs_LineOption);
 
 unsigned int HexToBCD16(unsigned int input);
-
+void Segs_16DDP(unsigned int, unsigned int);
