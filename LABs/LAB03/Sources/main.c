@@ -107,7 +107,7 @@ void main(void)
                 value = 0; //wrap around if the value exceeds 9999
             }
         }
-      //Segs_Normal(digit_position, value, Segs_DP_ON);
+      //Segs_Normal(digit_position, value, Segs_DP_ON); 
       //hexValue = DecimalToBCD(value);
       Segs_16H(value, 1);
       //hexValue = DecimalToBCD(value);
