@@ -42,7 +42,7 @@
 /********************************************************************/
 void main(void)
 {
-  
+  char name[20] = "Saamia Shahab";
   _DISABLE_COP();
   EnableInterrupts;
 
@@ -54,13 +54,22 @@ void main(void)
   sci0_Init();
   Clock_Set20MHZ();
   Segs_Init();
+   lcd_Init();
 
   /********************************************************************/
   // main program loop
   /********************************************************************/
   for (;;)
   {
+    //lcd_Data('Q'); --works
+    SWL_ON(SWL_RED);
     
+    //lcd_AddrXY(2,5);
+    //lcd_String("Saamia");
+
+    //lcd_StringXY(2,5, "Saamia");
+    lcd_StringXY(0,2, "This is spam!");
+
   }
 }
 /********************************************************************/

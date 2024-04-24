@@ -26,6 +26,7 @@
 /********************************************************************/
 unsigned int DecimalToBCD(unsigned int decimal);
 void DisplayBCD(unsigned int bcd);
+void DisplayBCDWithDecimal(unsigned int bcd, unsigned int digitPosition);
 /********************************************************************/
 // Local Prototypes
 /********************************************************************/
@@ -82,17 +83,19 @@ void main(void)
   for (;;)
   {
       DisplayBCD(value);
+      //DisplayBCDWithDecimal(value, digit_position);
       //Segs_16DDP(value,1);
         //check if the left button is pressed to change the current digit position
         if (SWL_Pushed(SWL_LEFT)) {
             digit_position = (digit_position + 1) % 4; //cycle through the four digit positions
             
         }
-        
          if (SWL_Pushed(SWL_RIGHT)) {
             digit_position = (digit_position - 1) % 4; //cycle through the four digit positions
               //Segs_Custom(digit_position, 0b00000000);
         }
+       // Segs_Normal(digit_position, value, Segs_DP_ON);
+
         //Segs_Custom(digit_position, 0b00000000);
         //check if the up button is pressed to increment the digit at the current position
         if (SWL_Pushed(SWL_UP)) {
@@ -170,6 +173,40 @@ unsigned int DecimalToBCD(unsigned int decimal) {
 }
 void DisplayBCD(unsigned int bcd) {
     Segs_16DDP(bcd, 0);
+
+}
+void DisplayBCDWithDecimal(unsigned int input, unsigned int digitPosition) {
+    unsigned char index = 0;
+    unsigned int Value;
+    unsigned int digitValue;
+    unsigned char decimalMask = 0; // Decimal mask to indicate the digit being edited
+
+    if (digitPosition < 4) {
+        index = digitPosition; // Set the index to the specified digit position
+        decimalMask = 1 << (7 - digitPosition); // Set the corresponding bit for the decimal point
+    } else {
+        return; // Exit function if digit position is out of range
+    }
+
+    if (input < 10000) {
+        Value = HexToBCD16(input);
+
+        // Extract the digits from the BCD value
+        digitValue = (Value >> (4 * (3 - digitPosition))) & 0x0F;
+
+        // Adjust the digit to turn on the decimal if the digit is being edited
+        if (digitPosition == 0) {
+            Value = (digitValue | decimalMask) << 8;
+        } else {
+            Value = digitValue << 8;
+        }
+
+        // Display the upper 8 segments
+        Segs_8H(index, Value >> 8);
+
+        // Display the lower 8 segments
+        Segs_8H(index + 2, Value & 0xFF);
+    }
 }
 /********************************************************************/
 // Interrupt Service Routines

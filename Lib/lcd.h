@@ -43,8 +43,8 @@
 /////////////////////////////////////////////////////////////////////////////
 
 void lcd_Init (void);
-void lcd_Ins (unsigned char); //LCD_Inst
-char lcd_Busy (void); //LCD_Inst
+void lcd_Ins(unsigned char); //LCD_Inst
+void lcd_Busy (void); //LCD_Inst
 char lcd_GetAddr(void);
 void lcd_Data (unsigned char val);
 void lcd_Addr (unsigned char addr);
@@ -60,3 +60,8 @@ void lcd_ShiftL (char);
 void lcd_ShiftR (char);
 void lcd_CGAddr (unsigned char addr);
 void lcd_CGChar (unsigned char cgAddr, unsigned const char* cgData, int size);
+
+
+
+void lcd_Ctrl(unsigned char cCommand);
+unsigned char lcd_BusyReturns(void);
