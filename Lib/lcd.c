@@ -95,8 +95,9 @@ unsigned char lcd_BusyReturns(void) {
 }
 
 void lcd_Addr(unsigned char addr) {
-    addr |= 0b10000000; // Set the DB7 bit for address mode
-    lcd_Ctrl(addr);
+    lcd_Ins(0x80 | addr);
+    // addr |= 0b10000000; // Set the DB7 bit for address mode
+    // lcd_Ctrl(addr);
 }
 
 void lcd_AddrXY(unsigned char ix, unsigned char iy) {
@@ -113,8 +114,11 @@ void lcd_AddrXY(unsigned char ix, unsigned char iy) {
     }
 }
 void lcd_String(char const *straddr) {
-    while (*straddr != '\0') { // Loop until the null terminator is reached
-        lcd_Data(*straddr++); // Write each character to the LCD and move to the next character
+    int i=0;
+                                                                                       
+    while (straddr[i] != '\0') { // Loop until the null terminator is reached
+        lcd_Data(straddr[i]); // Write each character to the LCD and move to the next character
+        i++;
     }
 }
 
@@ -124,7 +128,16 @@ void lcd_StringXY(unsigned char ix, unsigned char iy, char const *const straddr)
     // Write the string to the LCD starting from the specified position
     lcd_String(straddr);
 }
-
+void lcdSmartString(char const * straddr, unsigned int delay)
+{
+      int i=0;
+                                                                                       
+    while (straddr[i] != '\0') { // Loop until the null terminator is reached
+        lcd_Data(straddr[i]); // Write each character to the LCD and move to the next character
+        i++;
+    }
+    Delay(20);
+}
 
 //////////////////WORKS KIND OF I THNK SO???????????////////////////////////
 // void lcd_Addr(unsigned char addr)
@@ -137,7 +150,7 @@ void lcd_StringXY(unsigned char ix, unsigned char iy, char const *const straddr)
 //     PTH = addr;
 //     // Strobe the enable pin
 //     lcd_EUp;
-//     lcd_EDown;
+//     lcd_EDown; 
 // }
 
 // void lcd_AddrXY(unsigned char ix, unsigned char iy)

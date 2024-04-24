@@ -215,10 +215,18 @@ unsigned int HexToBCD16(unsigned int input)
     return value;
 
 }
-void Segs_16DDP(unsigned int input, unsigned int dpLocation){
+void Segs_16DDP(unsigned int input, unsigned int dpLocation, Segs_DPOption dp){
     unsigned char index = 0;
     unsigned int Value;
 
+    if (dp)
+    {
+        index &= ~(0x80);
+    }
+    else
+    {
+        index |= 0x80;
+     }
     if (dpLocation % 4 == dpLocation)
     {
         index = dpLocation; // go at location

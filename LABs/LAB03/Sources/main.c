@@ -39,8 +39,10 @@ unsigned int counter = 0;
 unsigned int i = 0;
 // unsigned int currentStateUp=0;
 // unsigned int currentStateDown=0;
-unsigned int oldStateUp = 0;
-unsigned int oldStateDown = 0;
+// unsigned int currentStateUp=0;
+// unsigned int currentStateDown=0;
+unsigned int oldStateUp= 0;
+unsigned int oldStateDown= 0;
 
 unsigned int pressedUp = 0;
 unsigned int pressedDown = 0;
@@ -62,7 +64,7 @@ void main(void)
 {
   int count = 0;
   int j;
-  
+  int currentStateUp ;
   // Initialize the processor, device, and peripherals
   // main entry point
   _DISABLE_COP();
@@ -82,7 +84,8 @@ void main(void)
   /********************************************************************/
   for (;;)
   {
-      DisplayBCD(value);
+     // DisplayBCD(value);
+    
       //DisplayBCDWithDecimal(value, digit_position);
       //Segs_16DDP(value,1);
         //check if the left button is pressed to change the current digit position
@@ -94,11 +97,14 @@ void main(void)
             digit_position = (digit_position - 1) % 4; //cycle through the four digit positions
               //Segs_Custom(digit_position, 0b00000000);
         }
-       // Segs_Normal(digit_position, value, Segs_DP_ON);
+         //Segs_16DDP(value, digit_position, Segs_DP_ON);
+        //Segs_Normal(digit_position, value, Segs_DP_ON);
 
         //Segs_Custom(digit_position, 0b00000000);
         //check if the up button is pressed to increment the digit at the current position
-        if (SWL_Pushed(SWL_UP)) {
+     currentStateUp = SWL_Pushed(SWL_UP);
+
+        if ((currentStateUp != oldStateUp) && currentStateUp) {
             unsigned int multiplier = 1;
             //calculate the multiplier to isolate the current digit position
             for (i = 0; i < digit_position; i++) {
@@ -110,6 +116,7 @@ void main(void)
                 value = 0; //wrap around if the value exceeds 9999
             }
         }
+        oldStateUp = currentStateUp;
       //Segs_Normal(digit_position, value, Segs_DP_ON); 
       //hexValue = DecimalToBCD(value);
       Segs_16H(value, 1);
