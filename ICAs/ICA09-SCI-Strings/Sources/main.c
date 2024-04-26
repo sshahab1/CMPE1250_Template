@@ -62,7 +62,7 @@ void main(void)
   // Any main local variables must be declared here
 
   // main entry point
-  _DISABLE_COP();
+  _DISABLE_COP(); 
   EnableInterrupts;
 
   /********************************************************************/
