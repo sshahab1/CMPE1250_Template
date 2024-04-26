@@ -54,8 +54,8 @@ void main(void)
   sci0_Init();
   Clock_Set20MHZ();
   Segs_Init();
-   lcd_Init();
-
+  lcd_Init();
+  lcd_StringXY( 2, 2, "Saamia Shahab");
   /********************************************************************/
   // main program loop
   /********************************************************************/
@@ -68,7 +68,7 @@ void main(void)
     //lcd_AddrXY(2,5);
     //lcd_String("Saamia");
 
-    //lcd_StringXY(2,5, "Saamia");
+    
     //lcd_StringXY(0,2, "This is spam!");
 
   }

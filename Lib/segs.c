@@ -163,8 +163,6 @@ void Segs_16DDecimal(unsigned int input, Segs_LineOption line, Segs_DPOption dp)
     unsigned char index = 0;
     unsigned int Value;
 
-
-
     if (dp)
     {
         Value &= ~(0x80);
@@ -215,18 +213,18 @@ unsigned int HexToBCD16(unsigned int input)
     return value;
 
 }
-void Segs_16DDP(unsigned int input, unsigned int dpLocation, Segs_DPOption dp){
+void Segs_16DDP(unsigned int input, unsigned int dpLocation){
     unsigned char index = 0;
     unsigned int Value;
 
-    if (dp)
-    {
-        index &= ~(0x80);
-    }
-    else
-    {
-        index |= 0x80;
-     }
+    // if (dp)
+    // {
+    //     index &= ~(0x80);
+    // }
+    // else
+    // {
+    //     index |= 0x80;
+    //  }
     if (dpLocation % 4 == dpLocation)
     {
         index = dpLocation; // go at location

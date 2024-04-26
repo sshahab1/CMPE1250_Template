@@ -1,10 +1,10 @@
 /********************************************************************/
-// HC12 Program:  ICA07
+// HC12 Program:  Lab01 - Labs
 // Processor:     MC9S12XDP512
 // Bus Speed:     40 MHz
 // Author:        Saamia
-// Details:       A more detailed explanation of the program is entered here
-// Date:          Date Created
+// Details:      Lab s a calculator for the binary
+// Date:          April 17
 // Revision History :
 //  each revision will have a date + desc. of changes
 
@@ -16,21 +16,21 @@
 #include "sw_led.h"
 #include "rti.h"
 #include "clock.h"
+#include "segs.h"
 // Other system includes or your includes go here
-// #include <stdlib.h>
-// #include <stdio.h>
+#include <stdlib.h>
+#include <stdio.h>
 
 /********************************************************************/
 // Defines
 /********************************************************************/
-unsigned long i = 0;
+unsigned char ch;
 /********************************************************************/
 // Local Prototypes
 /********************************************************************/
-int Switches(void);
+
 /********************************************************************/
 // Global Variables
-/********************************************************************/
 
 /********************************************************************/
 // Constants
@@ -41,9 +41,9 @@ int Switches(void);
 /********************************************************************/
 void main(void)
 {
-  // Any main local variables must be declared here
-
-  // main entry point
+  int i;
+  char storeChar[31];
+  int count =0;
   _DISABLE_COP();
   EnableInterrupts;
 
@@ -52,30 +52,23 @@ void main(void)
   /********************************************************************/
   SWL_Init();
   RTI_Init();
+  sci0_Init();
   Clock_Set20MHZ();
-  SCI0BD=130;
-  SCI0R2_TE=1;      
-  SCI0R2_RE=1;
-
+  Segs_Init();
+  lcd_Init();
+  lcd_StringXY(3, 2, "Saamia Shahab");
   /********************************************************************/
   // main program loop
   /********************************************************************/
-
   for (;;)
   {
-    if(SCI0SR1_TDRE) 
+    if(SWL_Pushed(SWL_UP))
     {
-      SCI0DRL = 'A';
-    }
-    if(SCI0SR1_RDRF)
-    {
-      ch = toupper(char)SCI0DRL
-      SWL_ON(SWL_RED);
+       Segs_16DDP(count++, 0);
     }
    
   }
 }
-
 /********************************************************************/
 // Functions
 /********************************************************************/

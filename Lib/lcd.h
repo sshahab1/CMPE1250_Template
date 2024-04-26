@@ -41,10 +41,13 @@
 /////////////////////////////////////////////////////////////////////////////
 // Library Prototypes
 /////////////////////////////////////////////////////////////////////////////
-
+void lcd_Pos(unsigned char cRow, unsigned char cCol);
+void lcd_Char(unsigned char cDisplay);
+void lcd_CharGen8(char *cDefs);
 void lcd_Init (void);
+unsigned char lcd_Busy (void);
 void lcd_Ins(unsigned char); //LCD_Inst
-void lcd_Busy (void); //LCD_Inst
+//void lcd_Busy (void); //LCD_Inst
 char lcd_GetAddr(void);
 void lcd_Data (unsigned char val);
 void lcd_Addr (unsigned char addr);

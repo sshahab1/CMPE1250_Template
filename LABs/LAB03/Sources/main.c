@@ -84,7 +84,7 @@ void main(void)
   /********************************************************************/
   for (;;)
   {
-     // DisplayBCD(value);
+        DisplayBCD(value);
     
       //DisplayBCDWithDecimal(value, digit_position);
       //Segs_16DDP(value,1);
@@ -97,7 +97,7 @@ void main(void)
             digit_position = (digit_position - 1) % 4; //cycle through the four digit positions
               //Segs_Custom(digit_position, 0b00000000);
         }
-         //Segs_16DDP(value, digit_position, Segs_DP_ON);
+        //Segs_16DDP(value, digit_position, Segs_DP_ON);
         //Segs_Normal(digit_position, value, Segs_DP_ON);
 
         //Segs_Custom(digit_position, 0b00000000);
